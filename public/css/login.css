@@ -1,0 +1,125 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', system-ui, sans-serif;
+}
+
+body {
+    height: 100vh;
+    background: #FFD84D;
+}
+
+.auth-wrapper {
+    display: flex;
+    height: 100vh;
+}
+
+/* LEFT */
+.brand-section {
+    flex: 1;
+    background: #FFD84D;
+    padding: 80px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.brand-section img {
+    width: 140px;
+    margin-bottom: 30px;
+}
+
+.brand-section h1 {
+    font-size: 42px;
+    font-weight: 900;
+    color: #000;
+    margin-bottom: 10px;
+}
+
+.brand-section p {
+    font-size: 16px;
+    color: #000;
+    max-width: 360px;
+}
+
+/* RIGHT */
+.login-section {
+    flex: 1;
+    background: #000;
+    color: #fff;
+    padding: 80px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.login-section h2 {
+    font-size: 32px;
+    margin-bottom: 40px;
+}
+
+.field {
+    margin-bottom: 25px;
+}
+
+.field label {
+    display: block;
+    margin-bottom: 8px;
+    font-size: 14px;
+}
+
+.field input {
+    width: 100%;
+    padding: 14px;
+    border: none;
+    outline: none;
+    font-size: 14px;
+    background: #111;
+    color: #fff;
+}
+
+.field input::placeholder {
+    color: #777;
+}
+
+button {
+    width: 100%;
+    padding: 14px;
+    background: #FFD84D;
+    color: #000;
+    border: none;
+    font-size: 16px;
+    font-weight: 700;
+    cursor: pointer;
+    margin-top: 10px;
+    transition: 0.2s ease;
+}
+
+button:hover {
+    background: #ffce1a;
+}
+
+.forgot {
+    display: block;
+    margin-top: 20px;
+    font-size: 13px;
+    color: #FFD84D;
+    text-decoration: none;
+}
+
+.forgot:hover {
+    text-decoration: underline;
+}
+
+/* RESPONSIVE */
+@media (max-width: 900px) {
+    .auth-wrapper {
+        flex-direction: column;
+    }
+
+    .brand-section,
+    .login-section {
+        padding: 50px;
+    }
+}
