@@ -12,16 +12,22 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('clients', function (Blueprint $table) {
-            $table->id();
-            $table->string('name');
-            $table->string('email')->unique();
-            $table->string('phone')->nullable();
-            $table->string('company_name')->nullable();
-            $table->text('address')->nullable();
-            $table->string('requirement_file_link')->nullable();
-            $table->text('requirement_details')->nullable();
-            $table->timestamps();
-        });
+            
+        $table->id();
+        $table->string('name');
+        $table->string('ph_no', 15);
+        $table->string('email')->nullable();
+        $table->text('address')->nullable();
+
+        // $table->foreignId('source_id')
+        //       ->nullable()
+        //       ->constrained('source_master')
+        //       ->nullOnDelete();
+        $table->unsignedBigInteger('source_id')->nullable();
+
+
+        $table->timestamps();
+    });
     }
 
     /**

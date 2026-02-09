@@ -27,10 +27,13 @@
 
     <!-- HERO SECTION -->
     <section class="hero">
-        <div class="hero-background"></div>
+        <video class="hero-background" autoplay muted loop playsinline>
+            <source src="{{ asset('videos/robvideo.mp4') }}" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
         <div class="hero-content">
             <div class="hero-logo">
-                <img src="{{ asset('images/rtlzoom.jpg') }}" alt="RobtheLabStudios Logo">
+                <img src="{{ asset('images/rtllogo.png') }}" alt="RobtheLabStudios Logo">
             </div>
             <h1 class="hero-title">
                 <span class="line">Rob</span>
@@ -143,30 +146,27 @@
             </div>
             <div class="portfolio-grid">
                 <div class="portfolio-item">
-                    <div class="portfolio-image">
-                        <div class="portfolio-overlay">
-                            <h4>Wedding Film</h4>
-                            <p>Sarah & Mike's Special Day</p>
-                            <a href="#" class="portfolio-link"><i class="fas fa-play"></i></a>
-                        </div>
+                    <img src="{{ asset('images/aai.jpg') }}" alt="Wedding Film" class="portfolio-image">
+                    <div class="portfolio-overlay">
+                        <h4>Wedding Film</h4>
+                        <p>Sarah & Mike's Special Day</p>
+                        <a href="#" target="_blank" rel="noopener noreferrer" class="portfolio-link"><i class="fas fa-play"></i></a>
                     </div>
                 </div>
                 <div class="portfolio-item">
-                    <div class="portfolio-image">
-                        <div class="portfolio-overlay">
-                            <h4>Product Launch</h4>
-                            <p>TechCorp Brand Video</p>
-                            <a href="#" class="portfolio-link"><i class="fas fa-play"></i></a>
-                        </div>
+                    <img src="{{ asset('images/bupai.jpg') }}" alt="Product Launch" class="portfolio-image">
+                    <div class="portfolio-overlay">
+                        <h4>Product Launch</h4>
+                        <p>TechCorp Brand Video</p>
+                        <a href="#" target="_blank" rel="noopener noreferrer" class="portfolio-link"><i class="fas fa-play"></i></a>
                     </div>
                 </div>
                 <div class="portfolio-item">
-                    <div class="portfolio-image">
-                        <div class="portfolio-overlay">
-                            <h4>Corporate Video</h4>
-                            <p>Company Culture Story</p>
-                            <a href="#" class="portfolio-link"><i class="fas fa-play"></i></a>
-                        </div>
+                    <img src="{{ asset('images/forestman.jpg') }}" alt="Corporate Video" class="portfolio-image">
+                    <div class="portfolio-overlay">
+                        <h4>Corporate Video</h4>
+                        <p>Company Culture Story</p>
+                        <a href="#" target="_blank" rel="noopener noreferrer" class="portfolio-link"><i class="fas fa-play"></i></a>
                     </div>
                 </div>
             </div>

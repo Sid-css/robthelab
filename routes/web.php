@@ -25,5 +25,5 @@ Route::middleware('auth')->group(function () {
 Route::get('/', [BookingController::class, 'landing'])->name('landing');
 Route::get('/book', [BookingController::class, 'create'])->name('booking.create');
 Route::post('/book', [BookingController::class, 'store'])->name('booking.store');
-
+                                                                                       
 require __DIR__.'/auth.php';
