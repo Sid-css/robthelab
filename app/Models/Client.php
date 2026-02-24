@@ -6,21 +6,20 @@ use Illuminate\Database\Eloquent\Model;
 
 class Client extends Model
 {
+    // Explicitly define the table name because migration uses singular 'client'
+    protected $table = 'client';
+
+    // Explicitly define primary key if it is 'ID' (uppercase)
+    protected $primaryKey = 'ID';
+
+    // Disable timestamps because your migration does not have created_at/updated_at
+    public $timestamps = false; 
+
     protected $fillable = [
         'name',
-        'ph_no',
+        'phone_number', // Matches DB column
         'email',
         'address',
-        'source_id',
+        'source',       // Matches DB column
     ];
-
-    // public function source()
-    // {
-    //     return $this->belongsTo(SourceMaster::class, 'source_id');
-    // }
-
-    // public function shootDetails()
-    // {
-    //     return $this->hasMany(ShootDetail::class);
-    // }
 }
