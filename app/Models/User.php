@@ -2,24 +2,29 @@
 
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
 class User extends Authenticatable
 {
-    /** @use HasFactory<\Database\Factories\UserFactory> */
     use HasFactory, Notifiable;
+
+    // IMPORTANT: Tell Laravel your primary key is uppercase 'ID'
+    protected $primaryKey = 'ID';
+
+    // IMPORTANT: Tell Laravel your table doesn't have created_at and updated_at
+    public $timestamps = false;
 
     /**
      * The attributes that are mass assignable.
      *
      * @var list<string>
      */
-    protected $fillable = [
+    protected $fillable =[
         'name',
         'email',
+        'number', // Added this based on your migration
         'password',
     ];
 
@@ -40,7 +45,7 @@ class User extends Authenticatable
      */
     protected function casts(): array
     {
-        return [
+        return[
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];

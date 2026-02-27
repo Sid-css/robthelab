@@ -14,5 +14,11 @@ class ShootDetail extends Model
         'client_id',
         'shoot_type',
         'shoot_location',
+        'status', // <--- Added this
     ];
+
+    public function client()
+    {
+        return $this->belongsTo(Client::class, 'client_id', 'ID');
+    }
 }
