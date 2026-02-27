@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Client;
 use App\Models\ShootDetail;
+use Illuminate\Support\Facades\DB;
 
 class DashboardController extends Controller
 {
@@ -19,19 +20,32 @@ class DashboardController extends Controller
         $pendingRequests = ShootDetail::where('status', 'pending')->count();
         $approvedRequests = ShootDetail::where('status', 'approved')->count();
 
-        // 3. Fetch Recent Bookings (For the main Dashboard screen)
-        $recentBookings = ShootDetail::with('client')
-            ->orderBy('ID', 'desc')
-            ->take(5)
-            ->get();
+        // 3. Fetch Recent Bookings (For Dashboard screen)
+        $recentBookings = ShootDetail::with('client')->orderBy('ID', 'desc')->take(5)->get();
 
-        // 4. Fetch ALL Bookings (For the new Bookings Tab)
-        $allBookings = ShootDetail::with('client')
-            ->orderBy('ID', 'desc')
-            ->get();
+        // 4. Fetch ALL Bookings (For Bookings Tab)
+        $allBookings = ShootDetail::with('client')->orderBy('ID', 'desc')->get();
 
-              // 5. Fetch All Clients (NEW)
+        // 5. Fetch ALL Clients (For Clients Tab)
         $allClients = Client::orderBy('ID', 'desc')->get();
+
+        // 6. Data for Shoot Type Chart (Bar Chart)
+        $shootTypeData = ShootDetail::query()
+            ->select('shoot_type', DB::raw('count(*) as total'))
+            ->groupBy('shoot_type')
+            ->orderBy('total', 'desc')
+            ->get();
+        $shootTypeLabels = $shootTypeData->pluck('shoot_type');
+        $shootTypeCounts = $shootTypeData->pluck('total');
+
+        // 7. Data for Client Source Chart (Doughnut Chart)
+        $clientSourceData = Client::query()
+            ->select('source', DB::raw('count(*) as total'))
+            ->groupBy('source')
+            ->orderBy('total', 'desc')
+            ->get();
+        $clientSourceLabels = $clientSourceData->pluck('source');
+        $clientSourceCounts = $clientSourceData->pluck('total');
 
         return view('admin.dashboard', compact(
             'totalClients',
@@ -39,8 +53,12 @@ class DashboardController extends Controller
             'pendingRequests',
             'approvedRequests',
             'recentBookings',
-            'allBookings',// <--- Added this
-            'allClients'
+            'allBookings',
+            'allClients',
+            'shootTypeLabels', 
+            'shootTypeCounts',
+            'clientSourceLabels', // Passed to view
+            'clientSourceCounts'  // Passed to view
         ));
     }
 
