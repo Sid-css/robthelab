@@ -47,11 +47,15 @@
         .topbar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 40px; }
         .logout { background: #ff4d4d; border: none; padding: 10px 20px; color: #fff; border-radius: 6px; cursor: pointer; font-size: 14px; }
         .alert-success { background: #2ecc71; color: white; padding: 15px; border-radius: 8px; margin-bottom: 20px; }
+        .alert-error { background: #ff4d4d; color: white; padding: 15px; border-radius: 8px; margin-bottom: 20px; }
+        .alert-warning { background: #ffb703; color: #000; padding: 15px; border-radius: 8px; margin-bottom: 20px; }
+        .alert-info { background: #3498db; color: white; padding: 15px; border-radius: 8px; margin-bottom: 20px; }
+        .alert-close { float: right; cursor: pointer; font-size: 18px; font-weight: bold; }
 
         .cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 25px; }
         .card { background: var(--bg-card); padding: 25px; border-radius: 12px; box-shadow: 0 5px 15px var(--shadow-color); transition: background-color 0.3s; }
         .card h3 { font-size: 16px; margin-bottom: 10px; color: var(--text-secondary); }
-        .card p { font-size: 32px; font-weight: 600; color: var(--accent-primary); }
+        .cards .card p { font-size: 32px; font-weight: 600; color: var(--accent-primary); }
         
         /* Chart Split Container */
         .charts-wrapper { display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 25px; margin-top: 50px; }
@@ -91,7 +95,7 @@
         <a id="nav-bookings" class="tab-link" onclick="switchTab('bookings-tab', this)">Bookings</a>
         <a id="nav-clients" class="tab-link" onclick="switchTab('clients-tab', this)">Clients</a>
         <a href="#">Availability</a>
-        <a href="#">Settings</a>
+        <a id="nav-settings" class="tab-link" onclick="switchTab('settings-tab', this)">Settings</a>
     </div>
 
     <div class="main">
@@ -106,7 +110,24 @@
             </div>
         </div>
 
-        @if(session('success'))<div class="alert-success" id="success-alert">{{ session('success') }}</div>@endif
+        @if(session('success'))
+            <div class="alert-success" id="success-alert">
+                <span class="alert-close" onclick="this.parentElement.style.display='none';">&times;</span>
+                {{ session('success') }}
+            </div>
+        @endif
+
+        @if($errors->any())
+            <div class="alert-error" id="error-alert">
+                <span class="alert-close" onclick="this.parentElement.style.display='none';">&times;</span>
+                <strong>Please fix the following errors:</strong>
+                <ul style="margin: 10px 0 0 20px;">
+                    @foreach($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
 
         <!-- =================== DASHBOARD TAB =================== -->
         <div id="dashboard-tab" class="tab-content">
@@ -270,6 +291,67 @@
                 </table>
             </div>
         </div>
+
+    <!-- =================== SETTINGS TAB =================== -->
+<div id="settings-tab" class="tab-content">
+    <h2>Account Settings</h2>
+
+    <div style="display:flex; gap:25px; flex-wrap:wrap; margin-top:20px;">
+
+        <!-- Profile Card -->
+        <div class="card" style="max-width:350px; flex:1;">
+            <h3 style="margin-bottom:15px;">Profile Information</h3>
+
+            <p style="margin-bottom:10px;">
+                <strong>Name:</strong><br>
+                {{ Auth::user()->name }}
+            </p>
+
+            <p style="margin-bottom:10px;">
+                <strong>Email:</strong><br>
+                {{ Auth::user()->email }}
+            </p>
+
+            <p style="color:var(--text-secondary); font-size:13px;">
+                Your login credentials are linked to this account.
+            </p>
+        </div>
+
+        <!-- Change Password Card -->
+        <div class="card" style="max-width:450px; flex:1;">
+            <h3 style="margin-bottom:20px;">Change Password</h3>
+
+            <form method="POST" action="{{ route('change.password') }}">
+                @csrf
+                
+                <div style="margin-bottom:15px;">
+                    <label style="display:block; margin-bottom:6px;">Old Password</label>
+                    <input type="password" name="old_password" required 
+                    style="width:100%; padding:10px; border-radius:6px; border:1px solid var(--border-color); background:var(--bg-sub-nav); color:var(--text-primary);">
+                </div>
+
+                <div style="margin-bottom:15px;">
+                    <label style="display:block; margin-bottom:6px;">New Password</label>
+                    <input type="password" name="new_password" required 
+                    style="width:100%; padding:10px; border-radius:6px; border:1px solid var(--border-color); background:var(--bg-sub-nav); color:var(--text-primary);">
+                </div>
+
+                <div style="margin-bottom:20px;">
+                    <label style="display:block; margin-bottom:6px;">Confirm Password</label>
+                    <input type="password" name="new_password_confirmation" required 
+                    style="width:100%; padding:10px; border-radius:6px; border:1px solid var(--border-color); background:var(--bg-sub-nav); color:var(--text-primary);">
+                </div>
+
+                <button type="submit" class="action-btn" style="background:#2ecc71; color:white; padding:10px 20px;">
+                    Update Password
+                </button>
+            </form>
+        </div>
+
+    </div>
+</div>
+
+    </div>
     </div>
 </div>
 
@@ -385,6 +467,18 @@
                     setTimeout(() => alert.style.display = "none", 500);
                 }
             }, 3000);
+        @endif
+
+        // Fade out error message (stays longer than success)
+        @if($errors->any())
+            setTimeout(() => {
+                const alert = document.getElementById('error-alert');
+                if (alert) {
+                    alert.style.transition = "opacity 0.5s ease";
+                    alert.style.opacity = "0";
+                    setTimeout(() => alert.style.display = "none", 500);
+                }
+            }, 5000);
         @endif
 
         // --- Render Charts ---
