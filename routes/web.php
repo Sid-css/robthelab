@@ -33,5 +33,7 @@ Route::get('/cities/search', [BookingController::class, 'searchCities'])->name('
 Route::post('/change-password', [UserController::class, 'changePassword'])
     ->middleware('auth')
     ->name('change.password');
+
+Route::get('/api/shoot-types/{id}',[BookingController::class, 'getShootTypes'])->name('api.shoot-types');
     
 require __DIR__.'/auth.php';

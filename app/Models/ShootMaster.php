@@ -10,7 +10,8 @@ class ShootMaster extends Model
     protected $primaryKey = 'ID';
     public $timestamps = false;
 
-    protected $fillable = [
+    protected $fillable =[
+        'requirements_id', // <-- Add this
         'type_of_shoot',
         'shoot_description',
     ];

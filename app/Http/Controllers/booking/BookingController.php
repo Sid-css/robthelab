@@ -9,6 +9,7 @@ use App\Models\Client;
 use App\Models\SourceMaster;
 use App\Models\ShootMaster;
 use App\Models\ShootDetail;
+use App\Models\RequirementMaster; // <--- Added this
 
 class BookingController extends Controller
 {
@@ -19,14 +20,12 @@ class BookingController extends Controller
 
     /**
      * Handle the Booking Form Steps
-     * Step 1: Ask for Phone
-     * Step 2: Show Form (Pre-filled if client exists)
      */
     public function create(Request $request)
     {
         // 1. Fetch Data for Dropdowns
         $sources = SourceMaster::all();
-        $shootTypes = ShootMaster::all();
+        $requirements = RequirementMaster::all(); // <--- Fetch Requirements instead of ShootTypes
 
         // 2. Initialize View Variables
         $client = null;
@@ -40,7 +39,7 @@ class BookingController extends Controller
             $client = Client::where('phone_number', $phone)->first();
         }
 
-        return view('booking.create', compact('sources', 'shootTypes', 'client', 'phone', 'step'));
+        return view('booking.create', compact('sources', 'requirements', 'client', 'phone', 'step'));
     }
 
     /**
@@ -75,20 +74,20 @@ class BookingController extends Controller
             // Validate: All Fields
             $request->validate([
                 'name'           => 'required|string|max:255',
-                'ph_no'          => 'required|digits:10', // Must be exactly 10 digits
+                'ph_no'          => 'required|digits:10',
                 'email'          => 'required|email|max:55',
                 'address'        => 'required|string',
                 'source'         => 'required',
                 'shoot_type'     => 'required',
                 'shoot_location' => 'required|string',
-            ], [
+            ],[
                 'ph_no.digits' => 'The phone number must be exactly 10 digits.',
             ]);
 
             // Create New Client
             $client = Client::create([
                 'name'         => $request->name,
-                'phone_number' => $request->ph_no, // Mapping form input to DB column
+                'phone_number' => $request->ph_no,
                 'email'        => $request->email,
                 'address'      => $request->address,
                 'source'       => $request->source,
@@ -126,5 +125,14 @@ class BookingController extends Controller
         }
         
         return response()->json([]);
+    }
+
+    /**
+     * AJAX Get Shoot Types based on Requirement ID
+     */
+    public function getShootTypes($id)
+    {
+        $shootTypes = ShootMaster::where('requirements_id', $id)->get();
+        return response()->json($shootTypes);
     }
 }
