@@ -135,4 +135,38 @@ class BookingController extends Controller
         $shootTypes = ShootMaster::where('requirements_id', $id)->get();
         return response()->json($shootTypes);
     }
+     public function checkStatus(Request $request)
+    {
+        $request->validate([
+            'phone' => 'required|digits:10'
+        ]);
+
+        // Find the client
+        $client = Client::where('phone_number', $request->phone)->first();
+
+        if (!$client) {
+            return response()->json([
+                'success' => false, 
+                'message' => 'No bookings found for this phone number.'
+            ]);
+        }
+
+        // Find all bookings for this client
+        $bookings = ShootDetail::where('client_id', $client->ID)
+            ->orderBy('ID', 'desc')
+            ->get(['ID', 'shoot_type', 'shoot_location', 'status']);
+
+        if ($bookings->isEmpty()) {
+            return response()->json([
+                'success' => false, 
+                'message' => 'No bookings found for this phone number.'
+            ]);
+        }
+
+        return response()->json([
+            'success' => true,
+            'client_name' => $client->name,
+            'bookings' => $bookings
+        ]);
+    }
 }
