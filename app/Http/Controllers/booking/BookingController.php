@@ -9,7 +9,7 @@ use App\Models\Client;
 use App\Models\SourceMaster;
 use App\Models\ShootMaster;
 use App\Models\ShootDetail;
-use App\Models\RequirementMaster; // <--- Added this
+use App\Models\RequirementMaster;
 
 class BookingController extends Controller
 {
@@ -18,60 +18,41 @@ class BookingController extends Controller
         return view('public.landing');
     }
 
-    /**
-     * Handle the Booking Form Steps
-     */
     public function create(Request $request)
     {
-        // 1. Fetch Data for Dropdowns
         $sources = SourceMaster::all();
-        $requirements = RequirementMaster::all(); // <--- Fetch Requirements instead of ShootTypes
+        $requirements = RequirementMaster::all();
 
-        // 2. Initialize View Variables
         $client = null;
-        $phone = $request->input('phone_check'); // Get phone from Step 1 input
-        $step = 1; // Default to Step 1
+        $phone = $request->input('phone_check');
+        $step = 1;
 
-        // 3. Logic: If phone is provided, move to Step 2
         if ($phone) {
             $step = 2; 
-            // Search for existing client in DB
             $client = Client::where('phone_number', $phone)->first();
         }
 
         return view('booking.create', compact('sources', 'requirements', 'client', 'phone', 'step'));
     }
 
-    /**
-     * Store the Booking Data
-     */
     public function store(Request $request)
     {
-        // SCENARIO A: EXISTING CLIENT (We found them in Step 2)
         if ($request->filled('existing_client_id')) {
-            
-            // Validate: Only Address (editable) + Shoot Details
             $request->validate([
                 'address'        => 'required|string',
                 'shoot_type'     => 'required',
                 'shoot_location' => 'required|string',
             ]);
 
-            // Update Existing Client Address
             $client = Client::find($request->existing_client_id);
-            
             if ($client) {
-                $client->address = $request->address; // Update address
+                $client->address = $request->address;
                 $client->save();
                 $clientId = $client->ID;
             } else {
                 return redirect()->back()->with('error', 'Client record not found.');
             }
-
-        // SCENARIO B: NEW CLIENT
         } else {
-            
-            // Validate: All Fields
             $request->validate([
                 'name'           => 'required|string|max:255',
                 'ph_no'          => 'required|digits:10',
@@ -84,7 +65,6 @@ class BookingController extends Controller
                 'ph_no.digits' => 'The phone number must be exactly 10 digits.',
             ]);
 
-            // Create New Client
             $client = Client::create([
                 'name'         => $request->name,
                 'phone_number' => $request->ph_no,
@@ -96,71 +76,65 @@ class BookingController extends Controller
             $clientId = $client->ID;
         }
 
-        // 3. Save Shoot Details (Linked to Client ID)
-        ShootDetail::create([
+        // 1. Create the Shoot Details first to get the database auto-increment ID
+        $shoot = ShootDetail::create([
             'client_id'      => $clientId,
             'shoot_type'     => $request->shoot_type,
             'shoot_location' => $request->shoot_location,
         ]);
 
-        // 4. Redirect
-        return redirect()->route('booking.create')->with('success', 'Booking submitted successfully!');
+        // 2. Generate Booking ID (e.g. ROB + 0001)
+        // str_pad adds zeros to the left so it's always at least 4 digits long
+        $bookingId = 'ROB' . str_pad($shoot->ID, 4, '0', STR_PAD_LEFT);
+        
+        // 3. Update the row with the new booking ID
+        $shoot->update(['booking_id' => $bookingId]);
+
+        // 4. Pass the booking_id to the session so we can show it to the user
+        return redirect()->route('booking.create')->with([
+            'success' => 'Booking submitted successfully!',
+            'booking_id' => $bookingId
+        ]);
     }
 
-    /**
-     * AJAX Search for Cities
-     */
     public function searchCities(Request $request)
     {
         $query = $request->get('query');
-        
         if ($query) {
-            // Search the 'cities' table
             $cities = DB::table('cities')
                 ->where('city', 'LIKE', "%{$query}%")
-                ->limit(10) // Limit results for performance
+                ->limit(10)
                 ->get();
-                
             return response()->json($cities);
         }
-        
         return response()->json([]);
     }
 
-    /**
-     * AJAX Get Shoot Types based on Requirement ID
-     */
     public function getShootTypes($id)
     {
         $shootTypes = ShootMaster::where('requirements_id', $id)->get();
         return response()->json($shootTypes);
     }
-     public function checkStatus(Request $request)
+
+    public function checkStatus(Request $request)
     {
         $request->validate([
             'phone' => 'required|digits:10'
         ]);
 
-        // Find the client
         $client = Client::where('phone_number', $request->phone)->first();
 
         if (!$client) {
-            return response()->json([
-                'success' => false, 
-                'message' => 'No bookings found for this phone number.'
-            ]);
+            return response()->json(['success' => false, 'message' => 'No bookings found for this phone number.']);
         }
 
-        // Find all bookings for this client
+        // Fetch bookings, making sure we include the 'booking_id' column
         $bookings = ShootDetail::where('client_id', $client->ID)
             ->orderBy('ID', 'desc')
-            ->get(['ID', 'shoot_type', 'shoot_location', 'status']);
+            ->get(['ID', 'booking_id', 'shoot_type', 'shoot_location', 'status']);
 
         if ($bookings->isEmpty()) {
-            return response()->json([
-                'success' => false, 
-                'message' => 'No bookings found for this phone number.'
-            ]);
+            return response()->json(['success' => false, 'message' => 'No bookings found for this phone number.']);
         }
 
         return response()->json([

@@ -151,13 +151,21 @@
     <div class="booking-wrapper">
         <div class="booking-card">
             
-            {{-- SUCCESS SCREEN (Only shows after a successful booking) --}}
+         {{-- SUCCESS SCREEN (Only shows after a successful booking) --}}
             @if(session('success'))
                 <div class="success-screen">
                     <div class="success-icon-wrapper">
                         <div class="success-icon">✔</div>
                     </div>
                     <h2 style="color: #fff; margin-bottom: 15px; font-size: 28px;">Booking Received!</h2>
+                    
+                    @if(session('booking_id'))
+                    <div style="background: rgba(255, 183, 3, 0.1); border: 1px dashed #ffb703; padding: 20px; border-radius: 8px; margin-bottom: 25px; display: inline-block;">
+                        <span style="color: #ccc; font-size: 14px;">Your Booking ID:</span><br>
+                        <strong style="color: #ffb703; font-size: 28px; letter-spacing: 2px;">{{ session('booking_id') }}</strong>
+                    </div>
+                    @endif
+
                     <p style="color: #ccc; margin-bottom: 30px; font-size: 16px; line-height: 1.5;">
                         {{ session('success') }} <br>
                         Our team will review your request and contact you shortly.
@@ -192,7 +200,7 @@
                 {{-- STEP 1: PHONE CHECK --}}
                 @if($step == 1)
                     <form method="GET" action="{{ route('booking.create') }}" class="booking-form">
-                        <div class="form-info">📞 Please enter your phone number to start.</div>
+                        <div class="form-info">Please enter your phone number to start.</div>
                         <div class="form-group">
                             <label for="phone_check">Phone Number <span class="required">*</span></label>
                             <input type="tel" id="phone_check" name="phone_check" placeholder="Enter your number" required maxlength="10" pattern="\d{10}" title="Please enter exactly 10 digits" oninput="this.value = this.value.replace(/[^0-9]/g, '').slice(0, 10)">
@@ -366,14 +374,18 @@
             if (data.success) {
                 let html = `<h3 style="font-size: 16px; margin-bottom: 10px;">Hi ${data.client_name}, here are your bookings:</h3>`;
                 
-                data.bookings.forEach(booking => {
+              data.bookings.forEach(booking => {
                     let badgeClass = booking.status === 'approved' ? 'badge-approved' : (booking.status === 'rejected' ? 'badge-rejected' : 'badge-pending');
+                    
+                    // Display 'ROB001' if booking_id exists, otherwise fallback to database ID '#1'
+                    let displayId = booking.booking_id ? booking.booking_id : '#' + booking.ID;
+
                     html += `
                         <div class="status-card">
                             <span class="status-badge ${badgeClass}">${booking.status}</span>
                             <div style="font-weight: 600; margin-bottom: 5px;">${booking.shoot_type}</div>
                             <div style="font-size: 12px; color: #aaa;">Location: ${booking.shoot_location}</div>
-                            <div style="font-size: 12px; color: #aaa; margin-top: 5px;">Booking ID: #${booking.ID}</div>
+                            <div style="font-size: 14px; color: #ffb703; margin-top: 5px; font-weight: 500;">Booking ID: ${displayId}</div>
                         </div>
                     `;
                 });

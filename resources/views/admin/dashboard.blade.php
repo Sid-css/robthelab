@@ -57,7 +57,6 @@
         .card h3 { font-size: 16px; margin-bottom: 10px; color: var(--text-secondary); }
         .cards .card p { font-size: 32px; font-weight: 600; color: var(--accent-primary); }
         
-        /* Chart Split Container */
         .charts-wrapper { display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 25px; margin-top: 50px; }
         .charts-wrapper .section { margin-top: 0; }
 
@@ -84,6 +83,11 @@
         .theme-toggle svg { width: 20px; height: 20px; color: var(--text-secondary); transition: color 0.3s; }
         .light-mode .moon-icon { display: none; }
         .dark-mode .sun-icon { display: none; }
+
+        /* Pagination Styles */
+        .pagination-container { display: flex; justify-content: flex-end; gap: 5px; margin-top: 15px; }
+        .page-btn { background: var(--bg-sub-nav); color: var(--text-secondary); border: 1px solid var(--border-color); padding: 5px 12px; border-radius: 4px; cursor: pointer; transition: 0.3s; font-size: 14px; }
+        .page-btn:hover, .page-btn.active { background: var(--accent-primary); color: var(--accent-primary-text); border-color: var(--accent-primary); }
     </style>
 </head>
 <body class="dark-mode">
@@ -138,7 +142,6 @@
                 <div class="card"><h3>Approved</h3><p>{{ $approvedRequests }}</p></div>
             </div>
 
-            <!-- 50/50 Charts Section -->
             <div class="charts-wrapper">
                 <div class="section">
                     <h2>Bookings by Service</h2>
@@ -157,12 +160,13 @@
 
             <div class="section">
                 <h2>Recent Booking Requests</h2>
-                <table>
-                    <thead><tr><th>ID</th><th>Client</th><th>Service</th><th>Status</th><th>Action</th></tr></thead>
+                <table id="table-recent">
+                    <thead><tr><th>S.No.</th><th>ID</th><th>Client</th><th>Service</th><th>Status</th><th>Action</th></tr></thead>
                     <tbody>
                         @forelse($recentBookings as $shoot)
                             <tr>
-                                <td>#{{ $shoot->ID }}</td>
+                                <td>{{ $loop->remaining + 1 }}</td>
+                                <td>{{ $shoot->booking_id ?? '#' . $shoot->ID }}</td>
                                 <td>{{ $shoot->client->name ?? 'N/A' }}</td>
                                 <td>{{ $shoot->shoot_type }}</td>
                                 <td><span class="status {{ $shoot->status }}">{{ $shoot->status }}</span></td>
@@ -177,7 +181,7 @@
                                 </td>
                             </tr>
                         @empty
-                            <tr><td colspan="5" style="text-align:center; padding: 20px;">No recent bookings found.</td></tr>
+                            <tr class="empty-row"><td colspan="6" style="text-align:center; padding: 20px;">No recent bookings found.</td></tr>
                         @endforelse
                     </tbody>
                 </table>
@@ -201,12 +205,17 @@
 
             <div class="section" style="margin-top: 0;">
                 <div id="all-bookings" class="booking-sub-tab">
-                    <table>
-                        <thead><tr><th>ID</th><th>Client</th><th>Service</th><th>Location</th><th>Status</th><th>Action</th></tr></thead>
+                    <table id="table-all-bookings">
+                        <thead><tr><th>S.No.</th><th>ID</th><th>Client</th><th>Service</th><th>Location</th><th>Status</th><th>Action</th></tr></thead>
                         <tbody>
                             @forelse($allBookings as $shoot)
                                 <tr>
-                                    <td>#{{ $shoot->ID }}</td><td>{{ $shoot->client->name ?? 'N/A' }}</td><td>{{ $shoot->shoot_type }}</td><td>{{ $shoot->shoot_location }}</td><td><span class="status {{ $shoot->status }}">{{ $shoot->status }}</span></td>
+                                    <td>{{ $loop->remaining + 1 }}</td>
+                                    <td>{{ $shoot->booking_id ?? '#' . $shoot->ID }}</td>
+                                    <td>{{ $shoot->client->name ?? 'N/A' }}</td>
+                                    <td>{{ $shoot->shoot_type }}</td>
+                                    <td>{{ $shoot->shoot_location }}</td>
+                                    <td><span class="status {{ $shoot->status }}">{{ $shoot->status }}</span></td>
                                     <td>
                                         @if($shoot->status == 'pending')
                                             <div style="display: flex; gap: 8px;">
@@ -218,18 +227,22 @@
                                     </td>
                                 </tr>
                             @empty
-                                <tr><td colspan="6" style="text-align:center; padding: 20px;">No bookings found.</td></tr>
+                                <tr class="empty-row"><td colspan="7" style="text-align:center; padding: 20px;">No bookings found.</td></tr>
                             @endforelse
                         </tbody>
                     </table>
                 </div>
                 <div id="pending-bookings" class="booking-sub-tab">
-                    <table>
-                        <thead><tr><th>ID</th><th>Client</th><th>Service</th><th>Location</th><th>Action</th></tr></thead>
+                    <table id="table-pending">
+                        <thead><tr><th>S.No.</th><th>ID</th><th>Client</th><th>Service</th><th>Location</th><th>Action</th></tr></thead>
                         <tbody>
                             @forelse($allBookings->where('status', 'pending') as $shoot)
                                 <tr>
-                                    <td>#{{ $shoot->ID }}</td><td>{{ $shoot->client->name ?? 'N/A' }}</td><td>{{ $shoot->shoot_type }}</td><td>{{ $shoot->shoot_location }}</td>
+                                    <td>{{ $loop->remaining + 1 }}</td>
+                                    <td>{{ $shoot->booking_id ?? '#' . $shoot->ID }}</td>
+                                    <td>{{ $shoot->client->name ?? 'N/A' }}</td>
+                                    <td>{{ $shoot->shoot_type }}</td>
+                                    <td>{{ $shoot->shoot_location }}</td>
                                     <td>
                                         <div style="display: flex; gap: 8px;">
                                             <form action="{{ route('booking.status') }}" method="POST"><input type="hidden" name="shoot_details_id" value="{{ $shoot->ID }}"><input type="hidden" name="status" value="approved">@csrf<button type="submit" class="action-btn" style="background:#2ecc71; color:white;">Approve</button></form>
@@ -238,31 +251,43 @@
                                     </td>
                                 </tr>
                             @empty
-                                <tr><td colspan="5" style="text-align:center; padding: 20px;">No pending bookings.</td></tr>
+                                <tr class="empty-row"><td colspan="6" style="text-align:center; padding: 20px;">No pending bookings.</td></tr>
                             @endforelse
                         </tbody>
                     </table>
                 </div>
                 <div id="approved-bookings" class="booking-sub-tab">
-                    <table>
-                        <thead><tr><th>ID</th><th>Client</th><th>Service</th><th>Location</th></tr></thead>
+                    <table id="table-approved">
+                        <thead><tr><th>S.No.</th><th>ID</th><th>Client</th><th>Service</th><th>Location</th></tr></thead>
                         <tbody>
                             @forelse($allBookings->where('status', 'approved') as $shoot)
-                                <tr><td>#{{ $shoot->ID }}</td><td>{{ $shoot->client->name ?? 'N/A' }}</td><td>{{ $shoot->shoot_type }}</td><td>{{ $shoot->shoot_location }}</td></tr>
+                                <tr>
+                                    <td>{{ $loop->remaining + 1 }}</td>
+                                    <td>{{ $shoot->booking_id ?? '#' . $shoot->ID }}</td>
+                                    <td>{{ $shoot->client->name ?? 'N/A' }}</td>
+                                    <td>{{ $shoot->shoot_type }}</td>
+                                    <td>{{ $shoot->shoot_location }}</td>
+                                </tr>
                             @empty
-                                <tr><td colspan="4" style="text-align:center; padding: 20px;">No approved bookings.</td></tr>
+                                <tr class="empty-row"><td colspan="5" style="text-align:center; padding: 20px;">No approved bookings.</td></tr>
                             @endforelse
                         </tbody>
                     </table>
                 </div>
                 <div id="rejected-bookings" class="booking-sub-tab">
-                    <table>
-                        <thead><tr><th>ID</th><th>Client</th><th>Service</th><th>Location</th></tr></thead>
+                    <table id="table-rejected">
+                        <thead><tr><th>S.No.</th><th>ID</th><th>Client</th><th>Service</th><th>Location</th></tr></thead>
                         <tbody>
                              @forelse($allBookings->where('status', 'rejected') as $shoot)
-                                <tr><td>#{{ $shoot->ID }}</td><td>{{ $shoot->client->name ?? 'N/A' }}</td><td>{{ $shoot->shoot_type }}</td><td>{{ $shoot->shoot_location }}</td></tr>
+                                <tr>
+                                    <td>{{ $loop->remaining + 1 }}</td>
+                                    <td>{{ $shoot->booking_id ?? '#' . $shoot->ID }}</td>
+                                    <td>{{ $shoot->client->name ?? 'N/A' }}</td>
+                                    <td>{{ $shoot->shoot_type }}</td>
+                                    <td>{{ $shoot->shoot_location }}</td>
+                                </tr>
                             @empty
-                                <tr><td colspan="4" style="text-align:center; padding: 20px;">No rejected bookings.</td></tr>
+                                <tr class="empty-row"><td colspan="5" style="text-align:center; padding: 20px;">No rejected bookings.</td></tr>
                             @endforelse
                         </tbody>
                     </table>
@@ -280,99 +305,149 @@
             </div>
             <div class="section" style="margin-top: 0;">
                 <table id="clients-table">
-                    <thead><tr><th>Name</th><th>Phone Number</th><th>Email</th><th>Address</th><th>Source</th></tr></thead>
+                    <thead><tr><th>S.No.</th><th>Name</th><th>Phone Number</th><th>Email</th><th>Address</th><th>Source</th></tr></thead>
                     <tbody>
                         @forelse($allClients as $client)
-                            <tr><td>{{ $client->name }}</td><td>{{ $client->phone_number }}</td><td>{{ $client->email }}</td><td>{{ $client->address }}</td><td>{{ $client->source }}</td></tr>
+                            <tr>
+                                <td>{{ $loop->remaining + 1 }}</td>
+                                <td>{{ $client->name }}</td>
+                                <td>{{ $client->phone_number }}</td>
+                                <td>{{ $client->email }}</td>
+                                <td>{{ $client->address }}</td>
+                                <td>{{ $client->source }}</td>
+                            </tr>
                         @empty
-                            <tr><td colspan="5" style="text-align:center; padding: 20px;">No clients found.</td></tr>
+                            <tr class="empty-row"><td colspan="6" style="text-align:center; padding: 20px;">No clients found.</td></tr>
                         @endforelse
                     </tbody>
                 </table>
             </div>
         </div>
 
-    <!-- =================== SETTINGS TAB =================== -->
-<div id="settings-tab" class="tab-content">
-    <h2>Account Settings</h2>
+        <!-- =================== SETTINGS TAB =================== -->
+        <div id="settings-tab" class="tab-content">
+            <h2>Account Settings</h2>
 
-    <div style="display:flex; gap:25px; flex-wrap:wrap; margin-top:20px;">
+            <div style="display:flex; gap:25px; flex-wrap:wrap; margin-top:20px;">
 
-        <!-- Profile Card -->
-        <div class="card" style="max-width:350px; flex:1;">
-            <h3 style="margin-bottom:15px;">Profile Information</h3>
+                <div class="card" style="max-width:350px; flex:1;">
+                    <h3 style="margin-bottom:15px;">Profile Information</h3>
+                    <p style="margin-bottom:10px;"><strong>Name:</strong><br>{{ Auth::user()->name }}</p>
+                    <p style="margin-bottom:10px;"><strong>Email:</strong><br>{{ Auth::user()->email }}</p>
+                    <p style="color:var(--text-secondary); font-size:13px;">Your login credentials are linked to this account.</p>
+                </div>
 
-            <p style="margin-bottom:10px;">
-                <strong>Name:</strong><br>
-                {{ Auth::user()->name }}
-            </p>
-
-            <p style="margin-bottom:10px;">
-                <strong>Email:</strong><br>
-                {{ Auth::user()->email }}
-            </p>
-
-            <p style="color:var(--text-secondary); font-size:13px;">
-                Your login credentials are linked to this account.
-            </p>
+                <div class="card" style="max-width:450px; flex:1;">
+                    <h3 style="margin-bottom:20px;">Change Password</h3>
+                    <form method="POST" action="{{ route('change.password') }}">
+                        @csrf
+                        <div style="margin-bottom:15px;">
+                            <label style="display:block; margin-bottom:6px;">Old Password</label>
+                            <input type="password" name="old_password" required style="width:100%; padding:10px; border-radius:6px; border:1px solid var(--border-color); background:var(--bg-sub-nav); color:var(--text-primary);">
+                        </div>
+                        <div style="margin-bottom:15px;">
+                            <label style="display:block; margin-bottom:6px;">New Password</label>
+                            <input type="password" name="new_password" required style="width:100%; padding:10px; border-radius:6px; border:1px solid var(--border-color); background:var(--bg-sub-nav); color:var(--text-primary);">
+                        </div>
+                        <div style="margin-bottom:20px;">
+                            <label style="display:block; margin-bottom:6px;">Confirm Password</label>
+                            <input type="password" name="new_password_confirmation" required style="width:100%; padding:10px; border-radius:6px; border:1px solid var(--border-color); background:var(--bg-sub-nav); color:var(--text-primary);">
+                        </div>
+                        <button type="submit" class="action-btn" style="background:#2ecc71; color:white; padding:10px 20px;">Update Password</button>
+                    </form>
+                </div>
+            </div>
         </div>
 
-        <!-- Change Password Card -->
-        <div class="card" style="max-width:450px; flex:1;">
-            <h3 style="margin-bottom:20px;">Change Password</h3>
-
-            <form method="POST" action="{{ route('change.password') }}">
-                @csrf
-                
-                <div style="margin-bottom:15px;">
-                    <label style="display:block; margin-bottom:6px;">Old Password</label>
-                    <input type="password" name="old_password" required 
-                    style="width:100%; padding:10px; border-radius:6px; border:1px solid var(--border-color); background:var(--bg-sub-nav); color:var(--text-primary);">
-                </div>
-
-                <div style="margin-bottom:15px;">
-                    <label style="display:block; margin-bottom:6px;">New Password</label>
-                    <input type="password" name="new_password" required 
-                    style="width:100%; padding:10px; border-radius:6px; border:1px solid var(--border-color); background:var(--bg-sub-nav); color:var(--text-primary);">
-                </div>
-
-                <div style="margin-bottom:20px;">
-                    <label style="display:block; margin-bottom:6px;">Confirm Password</label>
-                    <input type="password" name="new_password_confirmation" required 
-                    style="width:100%; padding:10px; border-radius:6px; border:1px solid var(--border-color); background:var(--bg-sub-nav); color:var(--text-primary);">
-                </div>
-
-                <button type="submit" class="action-btn" style="background:#2ecc71; color:white; padding:10px 20px;">
-                    Update Password
-                </button>
-            </form>
-        </div>
-
-    </div>
-</div>
-
-    </div>
     </div>
 </div>
 
 <script>
-    // --- Theme Toggling ---
+    // --- JS Pagination Class ---
+    class TableManager {
+        constructor(tableId, rowsPerPage) {
+            this.table = document.getElementById(tableId);
+            if (!this.table) return;
+            
+            this.tbody = this.table.querySelector('tbody');
+            this.allRows = Array.from(this.tbody.querySelectorAll('tr'));
+            
+            // Ignore if table is empty
+            if (this.allRows.length === 1 && this.allRows[0].classList.contains('empty-row')) return;
+            
+            this.filteredRows = [...this.allRows];
+            this.rowsPerPage = rowsPerPage;
+            this.currentPage = 1;
+            
+            this.paginationContainer = document.createElement('div');
+            this.paginationContainer.className = 'pagination-container';
+            this.table.parentNode.insertBefore(this.paginationContainer, this.table.nextSibling);
+            
+            this.render();
+        }
+        
+        search(query) {
+            query = query.toLowerCase();
+            this.filteredRows = this.allRows.filter(row => {
+                return row.textContent.toLowerCase().includes(query);
+            });
+            this.currentPage = 1;
+            this.render();
+        }
+        
+        render() {
+            this.allRows.forEach(row => row.style.display = 'none');
+            
+            let noResults = this.tbody.querySelector('.no-results-row');
+            if (this.filteredRows.length === 0) {
+                if (!noResults) {
+                    noResults = document.createElement('tr');
+                    noResults.className = 'no-results-row';
+                    const colCount = this.table.querySelector('thead tr').children.length;
+                    noResults.innerHTML = `<td colspan="${colCount}" style="text-align:center; padding: 20px; color: #888;">No matching records found.</td>`;
+                    this.tbody.appendChild(noResults);
+                }
+                noResults.style.display = '';
+                this.paginationContainer.innerHTML = '';
+                return;
+            } else {
+                if (noResults) noResults.style.display = 'none';
+            }
+            
+            const totalPages = Math.ceil(this.filteredRows.length / this.rowsPerPage);
+            const start = (this.currentPage - 1) * this.rowsPerPage;
+            const end = start + this.rowsPerPage;
+            
+            this.filteredRows.slice(start, end).forEach(row => row.style.display = '');
+            
+            this.paginationContainer.innerHTML = '';
+            if (totalPages > 1) {
+                for (let i = 1; i <= totalPages; i++) {
+                    const btn = document.createElement('button');
+                    btn.textContent = i;
+                    btn.className = i === this.currentPage ? 'page-btn active' : 'page-btn';
+                    btn.onclick = (e) => {
+                        e.preventDefault();
+                        this.currentPage = i;
+                        this.render();
+                    };
+                    this.paginationContainer.appendChild(btn);
+                }
+            }
+        }
+    }
+
+    // --- Global Variables ---
+    let tableManagers = {};
     const themeToggle = document.getElementById('theme-toggle');
-    
-    // Initialize charts variables globally so we can update them on theme change
     let barChartInstance = null;
     let doughnutChartInstance = null;
 
+    // --- Theme Logic ---
     function applyTheme(theme) {
-        if (theme === 'light') {
-            document.body.classList.add('light-mode');
-            document.body.classList.remove('dark-mode');
-        } else {
-            document.body.classList.remove('light-mode');
-            document.body.classList.add('dark-mode');
-        }
+        if (theme === 'light') { document.body.classList.add('light-mode'); document.body.classList.remove('dark-mode'); } 
+        else { document.body.classList.remove('light-mode'); document.body.classList.add('dark-mode'); }
         
-        // Update Chart text/grid colors when theme switches
         if(barChartInstance && doughnutChartInstance) {
             const isLight = theme === 'light';
             const gridColor = isLight ? 'rgba(0, 0, 0, 0.1)' : 'rgba(255, 255, 255, 0.1)';
@@ -394,7 +469,7 @@
         applyTheme(newTheme);
     });
 
-    // --- Main Tab Switching ---
+    // --- Tab Logic ---
     function switchTab(tabId, element, save = true) {
         document.querySelectorAll('.tab-content').forEach(tab => tab.style.display = 'none');
         document.querySelectorAll('.tab-link').forEach(link => link.classList.remove('active'));
@@ -403,7 +478,6 @@
         if (save) localStorage.setItem('activeAdminTab', tabId);
     }
 
-    // --- Bookings Sub-Tab Switching ---
     function switchBookingTab(status, element) {
         document.querySelectorAll('.booking-sub-tab').forEach(tab => tab.style.display = 'none');
         document.querySelectorAll('.sub-nav a').forEach(link => link.classList.remove('active'));
@@ -412,40 +486,29 @@
         localStorage.setItem('activeBookingSubTab', status);
     }
 
-    // --- Client-Side Search ---
+    // --- Search Logic (Now connected to Pagination) ---
     function filterBookings() {
-        let filter = document.getElementById('bookings-search').value.toLowerCase();
-        let tables = document.querySelectorAll('.booking-sub-tab table');
-        tables.forEach(table => {
-            let tr = table.getElementsByTagName('tbody')[0].getElementsByTagName('tr');
-            for (let i = 0; i < tr.length; i++) {
-                if (tr[i].getElementsByTagName('td').length <= 1) continue;
-                let clientTd = tr[i].getElementsByTagName('td')[1];
-                let serviceTd = tr[i].getElementsByTagName('td')[2];
-                if (clientTd.textContent.toLowerCase().includes(filter) || serviceTd.textContent.toLowerCase().includes(filter)) {
-                    tr[i].style.display = "";
-                } else {
-                    tr[i].style.display = "none";
-                }
-            }
-        });
+        let filter = document.getElementById('bookings-search').value;
+        if(tableManagers['all']) tableManagers['all'].search(filter);
+        if(tableManagers['pending']) tableManagers['pending'].search(filter);
+        if(tableManagers['approved']) tableManagers['approved'].search(filter);
+        if(tableManagers['rejected']) tableManagers['rejected'].search(filter);
     }
 
     function filterClients() {
-        let filter = document.getElementById('clients-search').value.toLowerCase();
-        let tr = document.getElementById('clients-table').getElementsByTagName('tbody')[0].getElementsByTagName('tr');
-        for (let i = 0; i < tr.length; i++) {
-            if (tr[i].getElementsByTagName('td').length <= 1) continue;
-            if (tr[i].textContent.toLowerCase().includes(filter)) {
-                tr[i].style.display = "";
-            } else {
-                tr[i].style.display = "none";
-            }
-        }
+        let filter = document.getElementById('clients-search').value;
+        if(tableManagers['clients']) tableManagers['clients'].search(filter);
     }
 
     // --- On Page Load ---
     document.addEventListener("DOMContentLoaded", function() {
+        // Init Pagination for 10 rows per page
+        tableManagers['all'] = new TableManager('table-all-bookings', 10);
+        tableManagers['pending'] = new TableManager('table-pending', 10);
+        tableManagers['approved'] = new TableManager('table-approved', 10);
+        tableManagers['rejected'] = new TableManager('table-rejected', 10);
+        tableManagers['clients'] = new TableManager('clients-table', 10);
+
         // Restore theme
         applyTheme(localStorage.getItem('theme') || 'dark');
 
@@ -462,20 +525,18 @@
             setTimeout(() => {
                 const alert = document.getElementById('success-alert');
                 if (alert) {
-                    alert.style.transition = "opacity 0.5s ease";
-                    alert.style.opacity = "0";
+                    alert.style.transition = "opacity 0.5s ease"; alert.style.opacity = "0";
                     setTimeout(() => alert.style.display = "none", 500);
                 }
             }, 3000);
         @endif
 
-        // Fade out error message (stays longer than success)
+        // Fade out error message
         @if($errors->any())
             setTimeout(() => {
                 const alert = document.getElementById('error-alert');
                 if (alert) {
-                    alert.style.transition = "opacity 0.5s ease";
-                    alert.style.opacity = "0";
+                    alert.style.transition = "opacity 0.5s ease"; alert.style.opacity = "0";
                     setTimeout(() => alert.style.display = "none", 500);
                 }
             }, 5000);
@@ -486,66 +547,19 @@
         const gridColor = isLight ? 'rgba(0, 0, 0, 0.1)' : 'rgba(255, 255, 255, 0.1)';
         const labelColor = isLight ? '#333' : '#ccc';
 
-        // 1. Bar Chart (Shoot Types)
         const shootTypeCtx = document.getElementById('shootTypeChart');
         if (shootTypeCtx) {
             barChartInstance = new Chart(shootTypeCtx, {
-                type: 'bar',
-                data: {
-                    labels: @json($shootTypeLabels),
-                    datasets:[{
-                        label: '# of Bookings',
-                        data: @json($shootTypeCounts),
-                        backgroundColor: 'rgba(255, 183, 3, 0.5)',
-                        borderColor: 'rgba(255, 183, 3, 1)',
-                        borderWidth: 1,
-                        borderRadius: 4
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    scales: {
-                        y: { beginAtZero: true, ticks: { color: labelColor, stepSize: 1 }, grid: { color: gridColor } },
-                        x: { ticks: { color: labelColor }, grid: { display: false } }
-                    },
-                    plugins: { legend: { display: false } }
-                }
+                type: 'bar', data: { labels: @json($shootTypeLabels), datasets:[{ label: '# of Bookings', data: @json($shootTypeCounts), backgroundColor: 'rgba(255, 183, 3, 0.5)', borderColor: 'rgba(255, 183, 3, 1)', borderWidth: 1, borderRadius: 4 }] },
+                options: { responsive: true, maintainAspectRatio: false, scales: { y: { beginAtZero: true, ticks: { color: labelColor, stepSize: 1 }, grid: { color: gridColor } }, x: { ticks: { color: labelColor }, grid: { display: false } } }, plugins: { legend: { display: false } } }
             });
         }
 
-        // 2. Doughnut Chart (Client Sources)
         const clientSourceCtx = document.getElementById('clientSourceChart');
         if (clientSourceCtx) {
             doughnutChartInstance = new Chart(clientSourceCtx, {
-                type: 'doughnut',
-                data: {
-                    labels: @json($clientSourceLabels),
-                    datasets:[{
-                        data: @json($clientSourceCounts),
-                        backgroundColor:[
-                            '#ffb703', // Yellow
-                            '#2ecc71', // Green
-                            '#3498db', // Blue
-                            '#e74c3c', // Red
-                            '#9b59b6', // Purple
-                            '#f1c40f'  // Gold
-                        ],
-                        borderWidth: 0,
-                        hoverOffset: 4
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    plugins: { 
-                        legend: { 
-                            position: 'right',
-                            labels: { color: labelColor, padding: 20 }
-                        } 
-                    },
-                    cutout: '65%' // Makes the doughnut thinner/thicker
-                }
+                type: 'doughnut', data: { labels: @json($clientSourceLabels), datasets:[{ data: @json($clientSourceCounts), backgroundColor:['#ffb703','#2ecc71','#3498db','#e74c3c','#9b59b6','#f1c40f'], borderWidth: 0, hoverOffset: 4 }] },
+                options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'right', labels: { color: labelColor, padding: 20 } } }, cutout: '65%' }
             });
         }
     });

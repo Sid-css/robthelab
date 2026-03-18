@@ -10,11 +10,12 @@ class ShootDetail extends Model
     protected $primaryKey = 'ID';
     public $timestamps = false;
 
-    protected $fillable = [
+    protected $fillable =[
         'client_id',
+        'booking_id', // <--- Added this
         'shoot_type',
         'shoot_location',
-        'status', // <--- Added this
+        'status',
     ];
 
     public function client()

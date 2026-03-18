@@ -7,43 +7,46 @@ use Illuminate\Http\Request;
 use App\Models\Client;
 use App\Models\ShootDetail;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Validation\Rules\Password;
 
 class DashboardController extends Controller
 {
     public function index()
     {
-        // 1. Get Totals
+ 
         $totalClients  = Client::count();
         $totalBookings = ShootDetail::count();
-
-        // 2. Count Status directly from the table
+ 
         $pendingRequests = ShootDetail::where('status', 'pending')->count();
         $approvedRequests = ShootDetail::where('status', 'approved')->count();
 
-        // 3. Fetch Recent Bookings (For Dashboard screen)
-        $recentBookings = ShootDetail::with('client')->orderBy('ID', 'desc')->take(5)->get();
-
-        // 4. Fetch ALL Bookings (For Bookings Tab)
-        $allBookings = ShootDetail::with('client')->orderBy('ID', 'desc')->get();
-
-        // 5. Fetch ALL Clients (For Clients Tab)
+        $recentBookings = ShootDetail::with('client')
+            ->orderBy('ID', 'desc')
+            ->take(5)
+            ->get();
+ 
+        $allBookings = ShootDetail::with('client')
+            ->orderBy('ID', 'desc')
+            ->get();
+ 
         $allClients = Client::orderBy('ID', 'desc')->get();
-
-        // 6. Data for Shoot Type Chart (Bar Chart)
+ 
         $shootTypeData = ShootDetail::query()
             ->select('shoot_type', DB::raw('count(*) as total'))
             ->groupBy('shoot_type')
             ->orderBy('total', 'desc')
             ->get();
+
         $shootTypeLabels = $shootTypeData->pluck('shoot_type');
         $shootTypeCounts = $shootTypeData->pluck('total');
-
-        // 7. Data for Client Source Chart (Doughnut Chart)
+ 
         $clientSourceData = Client::query()
             ->select('source', DB::raw('count(*) as total'))
             ->groupBy('source')
             ->orderBy('total', 'desc')
             ->get();
+
         $clientSourceLabels = $clientSourceData->pluck('source');
         $clientSourceCounts = $clientSourceData->pluck('total');
 
@@ -57,8 +60,8 @@ class DashboardController extends Controller
             'allClients',
             'shootTypeLabels', 
             'shootTypeCounts',
-            'clientSourceLabels', // Passed to view
-            'clientSourceCounts'  // Passed to view
+            'clientSourceLabels',
+            'clientSourceCounts'
         ));
     }
 
@@ -74,5 +77,21 @@ class DashboardController extends Controller
         $shoot->save();
 
         return back()->with('success', 'Booking status updated successfully!');
+    }
+
+    public function changePassword(Request $request)
+    {
+        $request->validate([
+            'old_password' =>['required', 'current_password'],
+            'new_password' => ['required', 'confirmed', Password::min(8)],
+        ], [
+            'old_password.current_password' => 'The provided old password does not match your current password.'
+        ]);
+
+        $user = auth()->user();
+        $user->password = Hash::make($request->new_password);
+        $user->save();
+
+        return back()->with('success', 'Your password has been changed successfully!');
     }
 }
