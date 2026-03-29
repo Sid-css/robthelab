@@ -8,6 +8,12 @@
 </head>
 <body>
 
+@if (session('status'))
+    <div style="color: #2ecc71; background: #e8f8f5; padding: 10px; border-radius: 5px; margin-bottom: 15px; font-size: 0.9rem;">
+        {{ session('status') }}
+    </div>
+@endif
+
 <div class="auth-wrapper">
 
     <!-- LEFT BRAND SECTION -->
@@ -44,7 +50,7 @@
 
             <button type="submit">Enter Studio</button>
 
-           <a href="#" class="forgot">Forgot password?</a>
+           <a href="{{ route('password.request') }}" class="forgot">Forgot password?</a>
         </form>
     </div>
 

@@ -37,4 +37,22 @@ Route::get('/cities/search',[BookingController::class, 'searchCities'])->name('c
 Route::get('/api/shoot-types/{id}',[BookingController::class, 'getShootTypes'])->name('api.shoot-types');
 Route::post('/api/check-status', [BookingController::class, 'checkStatus'])->name('api.check-status');
 
+use App\Http\Controllers\Auth\OtpPasswordResetController;
+
+// 1. Show the "Forgot Password" page (THIS IS THE MISSING ROUTE)
+Route::get('/forgot-password', [OtpPasswordResetController::class, 'showForgotForm'])
+    ->middleware('guest')
+    ->name('password.request');
+
+// 2. The rest of the OTP routes you added previously
+Route::post('/forgot-password/send-otp', [OtpPasswordResetController::class, 'sendOtp'])->name('password.email.otp');
+Route::get('/forgot-password/verify-otp',[OtpPasswordResetController::class, 'showVerifyForm'])->name('password.verify.otp.form');
+Route::post('/forgot-password/verify-otp', [OtpPasswordResetController::class, 'verifyOtp'])->name('password.verify.otp.submit');
+Route::get('/forgot-password/reset',[OtpPasswordResetController::class, 'showResetForm'])->name('password.reset.otp.form');
+Route::post('/forgot-password/reset',[OtpPasswordResetController::class, 'resetPassword'])->name('password.reset.otp.submit');
+
+Route::get('/forgot-password/send-otp', function() {
+    return redirect()->route('password.request');
+});
+
 require __DIR__.'/auth.php';
