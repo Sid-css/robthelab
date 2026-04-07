@@ -1,0 +1,718 @@
+/* BOOKING FORM STYLES */
+.booking-container {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 40px 20px;
+    background: linear-gradient(135deg, #0f172a 0%, #020617 100%);
+    position: relative;
+    overflow: hidden;
+}
+
+.booking-background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: 
+        radial-gradient(circle at 25% 25%, rgba(255, 215, 0, 0.08) 0%, transparent 50%),
+        radial-gradient(circle at 75% 75%, rgba(255, 193, 7, 0.08) 0%, transparent 50%);
+    z-index: 1;
+}
+
+.booking-wrapper {
+    position: relative;
+    z-index: 2;
+    width: 100%;
+    max-width: 600px;
+}
+
+.booking-card {
+    background: rgba(15, 23, 42, 0.5);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 215, 0, 0.2);
+    border-radius: 20px;
+    padding: 50px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6);
+}
+
+.booking-header {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.booking-header h1 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin-bottom: 10px;
+    color: #ffffff;
+}
+
+.booking-header .highlight {
+    background: linear-gradient(135deg, #FFD700, #FFC107);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.booking-divider {
+    width: 60px;
+    height: 3px;
+    background: linear-gradient(135deg, #FFD700, #FFC107);
+    margin: 15px auto 20px;
+    border-radius: 2px;
+}
+
+.booking-subtitle {
+    color: #cbd5f5;
+    font-size: 1rem;
+    margin-top: 20px;
+}
+
+.form-group {
+    margin-bottom: 25px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 10px;
+    color: #ffffff;
+    font-weight: 500;
+    font-size: 0.95rem;
+    letter-spacing: 0.5px;
+}
+
+.form-group label .required {
+    color: #FFD700;
+}
+
+.form-group input,
+.form-group textarea {
+    width: 100%;
+    padding: 14px 16px;
+    background: rgba(203, 213, 245, 0.05);
+    border: 1.5px solid rgba(255, 215, 0, 0.2);
+    border-radius: 10px;
+    font-family: 'Poppins', sans-serif;
+    font-size: 0.95rem;
+    color: #ffffff;
+    transition: all 0.3s ease;
+    outline: none;
+}
+
+.form-group input::placeholder,
+.form-group textarea::placeholder {
+    color: rgba(203, 213, 245, 0.5);
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+    background: rgba(203, 213, 245, 0.08);
+    border-color: #FFD700;
+    box-shadow: 0 0 0 3px rgba(255, 215, 0, 0.1);
+}
+
+.form-group textarea {
+    resize: vertical;
+    min-height: 120px;
+}
+
+.form-actions {
+    display: flex;
+    gap: 15px;
+    margin-top: 35px;
+    flex-wrap: wrap;
+}
+
+.submit-btn {
+    flex: 1;
+    min-width: 150px;
+    padding: 15px 30px;
+    background: linear-gradient(135deg, #FFD700, #FFC107);
+    color: #020617;
+    border: none;
+    border-radius: 50px;
+    font-size: 1rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 10px 30px rgba(255, 215, 0, 0.3);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.submit-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 15px 40px rgba(255, 215, 0, 0.5);
+}
+
+.submit-btn:active {
+    transform: translateY(-1px);
+}
+
+.cancel-btn {
+    flex: 1;
+    min-width: 150px;
+    padding: 15px 30px;
+    background: transparent;
+    color: #ffffff;
+    border: 2px solid rgba(255, 215, 0, 0.3);
+    border-radius: 50px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.cancel-btn:hover {
+    border-color: #FFD700;
+    background: rgba(255, 215, 0, 0.1);
+    color: #FFD700;
+}
+
+.form-info {
+    background: rgba(255, 215, 0, 0.08);
+    border-left: 3px solid #FFD700;
+    padding: 15px;
+    border-radius: 8px;
+    margin-bottom: 30px;
+    color: #cbd5f5;
+    font-size: 0.9rem;
+}
+
+@media (max-width: 600px) {
+    .booking-card {
+        padding: 30px;
+    }
+
+    .booking-header h1 {
+        font-size: 2rem;
+    }
+
+    .form-actions {
+        flex-direction: column;
+    }
+
+    .submit-btn,
+    .cancel-btn {
+        width: 100%;
+    }
+}
+
+/* SHOOTING STARS */
+.shooting-stars-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+    overflow: hidden;
+    pointer-events: none;
+}
+
+.shooting-star {
+    position: absolute;
+    width: 3px;
+    height: 3px;
+    background: #FFD700;
+    border-radius: 50%;
+    box-shadow: 0 0 15px 2px rgba(255, 215, 0, 1), 0 0 30px 4px rgba(255, 193, 7, 0.8);
+    bottom: 0;
+    right: 0;
+}
+
+@keyframes chaosticPath1 {
+    0% {
+        right: 0;
+        bottom: 0;
+        opacity: 1;
+    }
+    25% {
+        right: 15%;
+        bottom: 25%;
+    }
+    50% {
+        right: -5%;
+        bottom: 60%;
+    }
+    75% {
+        right: 25%;
+        bottom: 85%;
+    }
+    100% {
+        right: -10%;
+        bottom: 120%;
+        opacity: 0;
+    }
+}
+
+@keyframes chaosticPath2 {
+    0% {
+        right: 0;
+        bottom: 0;
+        opacity: 1;
+    }
+    25% {
+        right: 30%;
+        bottom: 15%;
+    }
+    50% {
+        right: 5%;
+        bottom: 50%;
+    }
+    75% {
+        right: -15%;
+        bottom: 70%;
+    }
+    100% {
+        right: -20%;
+        bottom: 110%;
+        opacity: 0;
+    }
+}
+
+@keyframes chaosticPath3 {
+    0% {
+        right: 0;
+        bottom: 0;
+        opacity: 1;
+    }
+    25% {
+        right: 20%;
+        bottom: 35%;
+    }
+    50% {
+        right: -10%;
+        bottom: 40%;
+    }
+    75% {
+        right: 10%;
+        bottom: 80%;
+    }
+    100% {
+        right: -15%;
+        bottom: 115%;
+        opacity: 0;
+    }
+}
+
+@keyframes chaosticPath4 {
+    0% {
+        right: 0;
+        bottom: 0;
+        opacity: 1;
+    }
+    25% {
+        right: 25%;
+        bottom: 20%;
+    }
+    50% {
+        right: -5%;
+        bottom: 55%;
+    }
+    75% {
+        right: 15%;
+        bottom: 75%;
+    }
+    100% {
+        right: -12%;
+        bottom: 105%;
+        opacity: 0;
+    }
+}
+
+@keyframes chaosticPath5 {
+    0% {
+        right: 0;
+        bottom: 0;
+        opacity: 1;
+    }
+    25% {
+        right: 10%;
+        bottom: 30%;
+    }
+    50% {
+        right: -8%;
+        bottom: 48%;
+    }
+    75% {
+        right: 20%;
+        bottom: 82%;
+    }
+    100% {
+        right: -18%;
+        bottom: 120%;
+        opacity: 0;
+    }
+}
+
+@keyframes chaosticPathUL1 {
+    0% {
+        left: 0;
+        top: 0;
+        opacity: 1;
+    }
+    25% {
+        left: 15%;
+        top: 25%;
+    }
+    50% {
+        left: -5%;
+        top: 60%;
+    }
+    75% {
+        left: 25%;
+        top: 85%;
+    }
+    100% {
+        left: -10%;
+        top: 120%;
+        opacity: 0;
+    }
+}
+
+@keyframes chaosticPathUL2 {
+    0% {
+        left: 0;
+        top: 0;
+        opacity: 1;
+    }
+    25% {
+        left: 30%;
+        top: 15%;
+    }
+    50% {
+        left: 5%;
+        top: 50%;
+    }
+    75% {
+        left: -15%;
+        top: 70%;
+    }
+    100% {
+        left: -20%;
+        top: 110%;
+        opacity: 0;
+    }
+}
+
+@keyframes chaosticPathUL3 {
+    0% {
+        left: 0;
+        top: 0;
+        opacity: 1;
+    }
+    25% {
+        left: 20%;
+        top: 35%;
+    }
+    50% {
+        left: -10%;
+        top: 40%;
+    }
+    75% {
+        left: 10%;
+        top: 80%;
+    }
+    100% {
+        left: -15%;
+        top: 115%;
+        opacity: 0;
+    }
+}
+
+@keyframes chaosticPathUL4 {
+    0% {
+        left: 0;
+        top: 0;
+        opacity: 1;
+    }
+    25% {
+        left: 25%;
+        top: 20%;
+    }
+    50% {
+        left: -5%;
+        top: 55%;
+    }
+    75% {
+        left: 15%;
+        top: 75%;
+    }
+    100% {
+        left: -12%;
+        top: 105%;
+        opacity: 0;
+    }
+}
+
+@keyframes chaosticPathUL5 {
+    0% {
+        left: 0;
+        top: 0;
+        opacity: 1;
+    }
+    25% {
+        left: 10%;
+        top: 30%;
+    }
+    50% {
+        left: -8%;
+        top: 48%;
+    }
+    75% {
+        left: 20%;
+        top: 82%;
+    }
+    100% {
+        left: -18%;
+        top: 120%;
+        opacity: 0;
+    }
+}
+
+.shooting-star:nth-child(1) {
+    animation: chaosticPath1 3s ease-out infinite;
+    animation-delay: 0s;
+}
+
+.shooting-star:nth-child(2) {
+    animation: chaosticPath2 3.2s ease-out infinite;
+    animation-delay: 0.3s;
+}
+
+.shooting-star:nth-child(3) {
+    animation: chaosticPath3 2.8s ease-out infinite;
+    animation-delay: 0.6s;
+}
+
+.shooting-star:nth-child(4) {
+    animation: chaosticPath4 3.4s ease-out infinite;
+    animation-delay: 0.9s;
+}
+
+.shooting-star:nth-child(5) {
+    animation: chaosticPath5 3s ease-out infinite;
+    animation-delay: 1.2s;
+}
+
+.shooting-star:nth-child(6) {
+    animation: chaosticPath1 3.1s ease-out infinite;
+    animation-delay: 1.5s;
+}
+
+.shooting-star:nth-child(7) {
+    animation: chaosticPath2 2.9s ease-out infinite;
+    animation-delay: 1.8s;
+}
+
+.shooting-star:nth-child(8) {
+    animation: chaosticPath3 3.3s ease-out infinite;
+    animation-delay: 2.1s;
+}
+
+.shooting-star:nth-child(9) {
+    animation: chaosticPath4 2.7s ease-out infinite;
+    animation-delay: 2.4s;
+}
+
+.shooting-star:nth-child(10) {
+    animation: chaosticPath5 3.2s ease-out infinite;
+    animation-delay: 2.7s;
+}
+
+.shooting-star:nth-child(11) {
+    animation: chaosticPath1 3s ease-out infinite;
+    animation-delay: 3s;
+}
+
+.shooting-star:nth-child(12) {
+    animation: chaosticPath2 3.1s ease-out infinite;
+    animation-delay: 3.3s;
+}
+
+.shooting-star:nth-child(13) {
+    animation: chaosticPath3 2.8s ease-out infinite;
+    animation-delay: 3.6s;
+}
+
+.shooting-star:nth-child(14) {
+    animation: chaosticPath4 3.3s ease-out infinite;
+    animation-delay: 3.9s;
+}
+
+.shooting-star:nth-child(15) {
+    animation: chaosticPath5 2.9s ease-out infinite;
+    animation-delay: 4.2s;
+}
+
+.shooting-star:nth-child(16) {
+    left: 0;
+    bottom: auto;
+    top: 0;
+    right: auto;
+    animation: chaosticPathUL1 3s ease-out infinite;
+    animation-delay: 0s;
+}
+
+.shooting-star:nth-child(17) {
+    left: 0;
+    bottom: auto;
+    top: 0;
+    right: auto;
+    animation: chaosticPathUL2 3.2s ease-out infinite;
+    animation-delay: 0.3s;
+}
+
+.shooting-star:nth-child(18) {
+    left: 0;
+    bottom: auto;
+    top: 0;
+    right: auto;
+    animation: chaosticPathUL3 2.8s ease-out infinite;
+    animation-delay: 0.6s;
+}
+
+.shooting-star:nth-child(19) {
+    left: 0;
+    bottom: auto;
+    top: 0;
+    right: auto;
+    animation: chaosticPathUL4 3.4s ease-out infinite;
+    animation-delay: 0.9s;
+}
+
+.shooting-star:nth-child(20) {
+    left: 0;
+    bottom: auto;
+    top: 0;
+    right: auto;
+    animation: chaosticPathUL5 3s ease-out infinite;
+    animation-delay: 1.2s;
+}
+
+.shooting-star:nth-child(21) {
+    left: 0;
+    bottom: auto;
+    top: 0;
+    right: auto;
+    animation: chaosticPathUL1 3.1s ease-out infinite;
+    animation-delay: 1.5s;
+}
+
+.shooting-star:nth-child(22) {
+    left: 0;
+    bottom: auto;
+    top: 0;
+    right: auto;
+    animation: chaosticPathUL2 2.9s ease-out infinite;
+    animation-delay: 1.8s;
+}
+
+.shooting-star:nth-child(23) {
+    left: 0;
+    bottom: auto;
+    top: 0;
+    right: auto;
+    animation: chaosticPathUL3 3.3s ease-out infinite;
+    animation-delay: 2.1s;
+}
+
+.shooting-star:nth-child(24) {
+    left: 0;
+    bottom: auto;
+    top: 0;
+    right: auto;
+    animation: chaosticPathUL4 2.7s ease-out infinite;
+    animation-delay: 2.4s;
+}
+
+.shooting-star:nth-child(25) {
+    left: 0;
+    bottom: auto;
+    top: 0;
+    right: auto;
+    animation: chaosticPathUL5 3.2s ease-out infinite;
+    animation-delay: 2.7s;
+}
+
+.shooting-star:nth-child(26) {
+    left: 0;
+    bottom: auto;
+    top: 0;
+    right: auto;
+    animation: chaosticPathUL1 3s ease-out infinite;
+    animation-delay: 3s;
+}
+
+.shooting-star:nth-child(27) {
+    left: 0;
+    bottom: auto;
+    top: 0;
+    right: auto;
+    animation: chaosticPathUL2 3.1s ease-out infinite;
+    animation-delay: 3.3s;
+}
+
+.shooting-star:nth-child(28) {
+    left: 0;
+    bottom: auto;
+    top: 0;
+    right: auto;
+    animation: chaosticPathUL3 2.8s ease-out infinite;
+    animation-delay: 3.6s;
+}
+
+.shooting-star:nth-child(29) {
+    left: 0;
+    bottom: auto;
+    top: 0;
+    right: auto;
+    animation: chaosticPathUL4 3.3s ease-out infinite;
+    animation-delay: 3.9s;
+}
+
+.shooting-star:nth-child(30) {
+    left: 0;
+    bottom: auto;
+    top: 0;
+    right: auto;
+    animation: chaosticPathUL5 2.9s ease-out infinite;
+    animation-delay: 4.2s;
+}
+
+/* ANIMATIONS */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.booking-card {
+    animation: fadeInUp 0.8s ease-out;
+}
+
+.form-group {
+    animation: fadeInUp 0.8s ease-out;
+}
+
+.form-group:nth-child(1) { animation-delay: 0.1s; }
+.form-group:nth-child(2) { animation-delay: 0.2s; }
+.form-group:nth-child(3) { animation-delay: 0.3s; }
+.form-group:nth-child(4) { animation-delay: 0.4s; }
+
+.form-actions {
+    animation: fadeInUp 0.8s ease-out 0.5s both;
+}
