@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="{{ asset('css/landing.css') }}">
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&family=Bebas+Neue&display=swap" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-
+{{-- stylesheets --}}
     <style>
         *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
