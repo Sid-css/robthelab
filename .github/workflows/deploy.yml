@@ -1,0 +1,50 @@
+name: Deploy to Hostinger VPS
+
+on:
+  push:
+    branches:
+      - main # Change this to 'master' if your default branch is called master
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Deploy to Server via SSH
+      uses: appleboy/ssh-action@v1.0.3
+      with:
+        host: ${{ secrets.SERVER_HOST }}
+        username: ${{ secrets.SERVER_USER }}
+        key: ${{ secrets.SSH_PRIVATE_KEY }}
+        script: |
+          cd /var/www/robthelab
+          
+          # 1. Turn on Maintenance Mode (Shows "Updating" to users)
+          php artisan down || true
+
+          # 2. Pull the latest code from GitHub
+          git pull origin main
+
+          # 3. Install PHP Dependencies
+          composer install --no-interaction --prefer-dist --optimize-autoloader --no-dev
+
+          # 4. Install Node Modules and Build Frontend
+          npm install
+          npm run build
+
+          # 5. Run Database Migrations
+          php artisan migrate --force
+
+          # 6. Clear and Rebuild Laravel Caches for max speed
+          php artisan optimize:clear
+          php artisan config:cache
+          php artisan route:cache
+          php artisan view:cache
+
+          # 7. Fix Permissions so Nginx doesn't crash
+          chown -R www-data:www-data /var/www/robthelab
+          chmod -R 775 /var/www/robthelab/storage
+          chmod -R 775 /var/www/robthelab/bootstrap/cache
+
+          # 8. Turn off Maintenance Mode
+          php artisan up
