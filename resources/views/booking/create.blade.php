@@ -322,7 +322,7 @@
     <div class="modal-content booking-form">
         <span class="close-modal" onclick="closeStatusModal()">&times;</span>
         <h2 style="margin-bottom: 15px; font-size: 22px;">Check Booking Status</h2>
-        <p style="font-size: 14px; color: #aaa; margin-bottom: 20px;">Enter the phone number you used to book your shoot.</p>
+        <!-- <p style="font-size: 14px; color: #aaa; margin-bottom: 20px;">Enter the phone number you used to book your shoot.</p> -->
         
         <div class="form-group">
             <input type="tel" id="check_status_phone" placeholder="10-digit Phone Number" maxlength="10" oninput="this.value = this.value.replace(/[^0-9]/g, '').slice(0, 10)">
