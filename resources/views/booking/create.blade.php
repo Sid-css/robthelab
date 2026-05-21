@@ -200,7 +200,7 @@
                 {{-- STEP 1: PHONE CHECK --}}
                 @if($step == 1)
                     <form method="GET" action="{{ route('booking.create') }}" class="booking-form">
-                        <div class="form-info">Please enter your phone number to start.</div>
+                        <!-- <div class="form-info">Please enter your phone number to start.</div> -->
                         <div class="form-group">
                             <label for="phone_check">Phone Number <span class="required">*</span></label>
                             <input type="tel" id="phone_check" name="phone_check" placeholder="Enter your number" required maxlength="10" pattern="\d{10}" title="Please enter exactly 10 digits" oninput="this.value = this.value.replace(/[^0-9]/g, '').slice(0, 10)">
@@ -322,7 +322,7 @@
     <div class="modal-content booking-form">
         <span class="close-modal" onclick="closeStatusModal()">&times;</span>
         <h2 style="margin-bottom: 15px; font-size: 22px;">Check Booking Status</h2>
-        <!-- <p style="font-size: 14px; color: #aaa; margin-bottom: 20px;">Enter the phone number you used to book your shoot.</p> -->
+        <p style="font-size: 14px; color: #aaa; margin-bottom: 20px;">Enter the phone number you used to book your shoot.</p>
         
         <div class="form-group">
             <input type="tel" id="check_status_phone" placeholder="10-digit Phone Number" maxlength="10" oninput="this.value = this.value.replace(/[^0-9]/g, '').slice(0, 10)">
