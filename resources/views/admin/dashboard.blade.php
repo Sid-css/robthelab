@@ -98,7 +98,7 @@
         <a id="nav-dashboard" class="tab-link" onclick="switchTab('dashboard-tab', this)">Dashboard</a>
         <a id="nav-bookings" class="tab-link" onclick="switchTab('bookings-tab', this)">Bookings</a>
         <a id="nav-clients" class="tab-link" onclick="switchTab('clients-tab', this)">Clients</a>
-        <a href="#">Availability</a>
+        <!-- <a href="#">Availability</a> -->
         <a id="nav-settings" class="tab-link" onclick="switchTab('settings-tab', this)">Settings</a>
     </div>
 
