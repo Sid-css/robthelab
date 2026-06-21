@@ -807,7 +807,7 @@
             </div>
             <div class="artists-grid">
                 <div class="artist-card reveal">
-                    <img src="{{ asset('images/singer.png') }}" alt="Artist 1" class="artist-image">
+                    <img src="{{ asset('images/singer.PNG') }}" alt="Artist 1" class="artist-image">
                     <div class="artist-overlay">
                         <h4>Lokkhyyo</h4>
                         <p>Singer-Songwriter-Performer</p>
