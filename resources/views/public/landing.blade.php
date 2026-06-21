@@ -483,6 +483,42 @@
         .client-card:hover img {
             opacity: 1; /* Brightens on hover without adding weird color filters */
         }
+
+        /* ── EDITORS ── */
+        .editors { background: var(--white); padding: 120px 0; }
+        .editors-grid {
+            display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px;
+        }
+        .editor-card {
+            position: relative; overflow: hidden;
+            background: var(--cream); border-radius: 4px;
+        }
+        .editor-image {
+            width: 100%; 
+            height: 420px; /* Matches the artists section */
+            object-fit: cover; 
+            object-position: center 20%; 
+            display: block;
+            transition: transform .6s cubic-bezier(.22,.68,0,1.2), filter .4s;
+            filter: grayscale(10%);
+        }
+        .editor-card:hover .editor-image {
+            transform: scale(1.04); filter: grayscale(0%);
+        }
+        .editor-overlay {
+            position: absolute; inset: 0;
+            background: linear-gradient(to top, rgba(10,10,10,.82) 0%, rgba(10,10,10,0) 55%);
+            display: flex; flex-direction: column; justify-content: flex-end;
+            padding: 28px;
+            opacity: 0; transition: opacity .35s ease;
+        }
+        .editor-card:hover .editor-overlay { opacity: 1; }
+        .editor-overlay h4 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.35rem; font-weight: 600; color: var(--white);
+            margin-bottom: 4px;
+        }
+        .editor-overlay p { font-size: .8rem; color: rgba(255,255,255,.65); }
         /* ── TABLET 1024px ── */
         @media (max-width: 1024px) {
             .container { padding: 0 36px; }
@@ -552,6 +588,12 @@
             .clients { padding: 72px 0; }
             .clients-grid { gap: 14px; }
             .client-card { padding: 32px 20px; flex-basis: 140px; }
+            .editors { padding: 72px 0; }
+            .editors-grid { grid-template-columns: 1fr; gap: 14px; }
+            .editor-overlay {
+                opacity: 1;
+                background: linear-gradient(to top, rgba(10,10,10,.78) 0%, transparent 52%);
+            }
         }
 
         /* ── SMALL MOBILE 480px ── */
@@ -817,6 +859,43 @@
                 <!-- Client 5 -->
                 <div class="client-card reveal">
                     <img src="{{ asset('images/fins.jpeg') }}" alt="Finns Weaver">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- EDITORS SECTION -->
+    <section class="editors" id="editors">
+        <div class="container">
+            <div class="section-header reveal">
+                <h2>Our Editors</h2>
+                <div class="section-divider"></div>
+                <p>The masterminds behind the final cut</p>
+            </div>
+            <div class="editors-grid">
+                <!-- Editor 1 -->
+                <div class="editor-card reveal">
+                    <img src="{{ asset('images/editor1.jpeg') }}" alt="Editor 1" class="editor-image">
+                    <div class="editor-overlay">
+                        <h4>Debabrot</h4>
+                        <p>Video Editor</p>
+                    </div>
+                </div>
+                <!-- Editor 2 -->
+                <div class="editor-card reveal reveal-delay-1">
+                    <img src="{{ asset('images/editor2.jpeg') }}" alt="Editor 2" class="editor-image">
+                    <div class="editor-overlay">
+                        <h4>Manas</h4>
+                        <p>Video Editor</p>
+                    </div>
+                </div>
+                <!-- Editor 3 -->
+                <div class="editor-card reveal reveal-delay-2">
+                    <img src="{{ asset('images/editor3.jpeg') }}" alt="Editor 3" class="editor-image">
+                    <div class="editor-overlay">
+                        <h4>Ryan</h4>
+                        <p>Video Editor</p>
+                    </div>
                 </div>
             </div>
         </div>
