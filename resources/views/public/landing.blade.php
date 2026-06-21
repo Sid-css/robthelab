@@ -831,40 +831,7 @@
         </div>
     </section>
 
-    <!-- CLIENTS SECTION -->
-    <section class="clients" id="clients">
-        <div class="container">
-            <div class="section-header reveal">
-                <h2>Our Clients</h2>
-                <div class="section-divider"></div>
-                <p>Trusted by amazing brands, creators, and businesses</p>
-            </div>
-            <div class="clients-grid">
-                <!-- Client 1 -->
-                <div class="client-card reveal">
-                    <img src="{{ asset('images/zeal_logo_final.png') }}" alt="Zeal Creations">
-                </div>
-                <!-- Client 2 -->
-                <div class="client-card reveal reveal-delay-1">
-                    <img src="{{ asset('images/tseries.png') }}" alt="T-Series">
-                </div>
-                <!-- Client 3 -->
-                <div class="client-card reveal reveal-delay-2">
-                    <img src="{{ asset('images/sony.jpeg') }}" alt="Sony Liv">
-                </div>
-                <!-- Client 4 -->
-                <div class="client-card reveal reveal-delay-3">
-                    <img src="{{ asset('images/Unknown.png') }}" alt="Petronas">
-                </div>
-                <!-- Client 5 -->
-                <div class="client-card reveal">
-                    <img src="{{ asset('images/fins.jpeg') }}" alt="Finns Weaver">
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- EDITORS SECTION -->
+        <!-- EDITORS SECTION -->
     <section class="editors" id="editors">
         <div class="container">
             <div class="section-header reveal">
@@ -896,6 +863,39 @@
                         <h4>Ryan</h4>
                         <p>Video Editor</p>
                     </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CLIENTS SECTION -->
+    <section class="clients" id="clients">
+        <div class="container">
+            <div class="section-header reveal">
+                <h2>Our Clients</h2>
+                <div class="section-divider"></div>
+                <p>Trusted by amazing brands, creators, and businesses</p>
+            </div>
+            <div class="clients-grid">
+                <!-- Client 1 -->
+                <div class="client-card reveal">
+                    <img src="{{ asset('images/zeal_logo_final.png') }}" alt="Zeal Creations">
+                </div>
+                <!-- Client 2 -->
+                <div class="client-card reveal reveal-delay-1">
+                    <img src="{{ asset('images/tseries.png') }}" alt="T-Series">
+                </div>
+                <!-- Client 3 -->
+                <div class="client-card reveal reveal-delay-2">
+                    <img src="{{ asset('images/sony.jpeg') }}" alt="Sony Liv">
+                </div>
+                <!-- Client 4 -->
+                <div class="client-card reveal reveal-delay-3">
+                    <img src="{{ asset('images/Unknown.png') }}" alt="Petronas">
+                </div>
+                <!-- Client 5 -->
+                <div class="client-card reveal">
+                    <img src="{{ asset('images/fins.jpeg') }}" alt="Finns Weaver">
                 </div>
             </div>
         </div>
