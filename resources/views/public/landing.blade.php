@@ -842,7 +842,7 @@
             <div class="editors-grid">
                 <!-- Editor 1 -->
                 <div class="editor-card reveal">
-                    <img src="{{ asset('images/editor1.jpeg') }}" alt="Editor 1" class="editor-image">
+                    <img src="{{ asset('images/editor1.png') }}" alt="Editor 1" class="editor-image">
                     <div class="editor-overlay">
                         <h4>Debabrot</h4>
                         <p>Video Editor</p>
@@ -850,7 +850,7 @@
                 </div>
                 <!-- Editor 2 -->
                 <div class="editor-card reveal reveal-delay-1">
-                    <img src="{{ asset('images/editor2.jpeg') }}" alt="Editor 2" class="editor-image">
+                    <img src="{{ asset('images/editor2.png') }}" alt="Editor 2" class="editor-image">
                     <div class="editor-overlay">
                         <h4>Manas</h4>
                         <p>Video Editor</p>
@@ -858,7 +858,7 @@
                 </div>
                 <!-- Editor 3 -->
                 <div class="editor-card reveal reveal-delay-2">
-                    <img src="{{ asset('images/editor3.jpeg') }}" alt="Editor 3" class="editor-image">
+                    <img src="{{ asset('images/editor3.png') }}" alt="Editor 3" class="editor-image">
                     <div class="editor-overlay">
                         <h4>Ryan</h4>
                         <p>Video Editor</p>
