@@ -306,7 +306,11 @@
             background: var(--cream); border-radius: 4px;
         }
         .artist-image {
-            width: 100%; height: auto; display: block;
+            width: 100%; 
+            height: 420px; /* Fixed height for uniformity */
+            object-fit: cover; /* Ensures the image fills the area without distortion */
+            object-position: center 20%; /* Keeps the focus near the face/upper body */
+            display: block;
             transition: transform .6s cubic-bezier(.22,.68,0,1.2), filter .4s;
             filter: grayscale(10%);
         }
@@ -455,6 +459,30 @@
         }
         .mobile-menu a:hover { color: var(--gold); }
 
+       /* ── CLIENTS ── */
+        .clients { background: var(--white); padding: 120px 0; }
+        .clients-grid {
+            display: flex; flex-wrap: wrap; justify-content: center; gap: 24px;
+        }
+        .client-card {
+            flex: 1 1 180px; max-width: 240px; /* Allows 5 items to fit and center perfectly */
+            display: flex; align-items: center; justify-content: center;
+            background: var(--off-white); padding: 40px;
+            border-radius: 4px; border: 1px solid var(--line);
+            transition: all .3s ease;
+        }
+        .client-card img {
+            max-width: 100%; max-height: 70px; object-fit: contain;
+            opacity: 0.8; /* Shows normal logo colors, slightly faded */
+            transition: all .3s ease;
+        }
+        .client-card:hover {
+            transform: translateY(-5px); box-shadow: 0 12px 30px rgba(0,0,0,.05);
+            border-color: var(--gold);
+        }
+        .client-card:hover img {
+            opacity: 1; /* Brightens on hover without adding weird color filters */
+        }
         /* ── TABLET 1024px ── */
         @media (max-width: 1024px) {
             .container { padding: 0 36px; }
@@ -463,6 +491,7 @@
             .portfolio-grid { grid-template-columns: repeat(2, 1fr); gap: 16px; }
             .footer-content { grid-template-columns: 1fr 1fr; gap: 40px; }
             .about-content { gap: 52px; }
+            .clients-grid { grid-template-columns: repeat(3, 1fr); gap: 16px; }
         }
 
         /* ── MOBILE 768px ── */
@@ -520,6 +549,9 @@
 
             .section-header { margin-bottom: 44px; }
             .section-header h2 { font-size: 2.2rem; }
+            .clients { padding: 72px 0; }
+            .clients-grid { gap: 14px; }
+            .client-card { padding: 32px 20px; flex-basis: 140px; }
         }
 
         /* ── SMALL MOBILE 480px ── */
@@ -542,6 +574,7 @@
             .section-header h2 { font-size: 2rem; }
             .cta-content h2 { font-size: 1.7rem; }
             .footer-content { gap: 30px; }
+            .client-card img { max-height: 50px; }
         }
     </style>
 </head>
@@ -732,25 +765,58 @@
             </div>
             <div class="artists-grid">
                 <div class="artist-card reveal">
-                    <img src="{{ asset('images/rtlzoom.jpg') }}" alt="Artist 1" class="artist-image">
+                    <img src="{{ asset('images/singer.png') }}" alt="Artist 1" class="artist-image">
                     <div class="artist-overlay">
-                        <h4>Artist Name</h4>
-                        <p>Cinematographer & Director</p>
+                        <h4>Lokkhyyo</h4>
+                        <p>Singer-Songwriter-Performer</p>
                     </div>
                 </div>
                 <div class="artist-card reveal reveal-delay-1">
-                    <img src="{{ asset('images/rtlzoom.jpg') }}" alt="Artist 2" class="artist-image">
+                    <img src="{{ asset('images/cinemato.jpeg') }}" alt="Artist 2" class="artist-image">
                     <div class="artist-overlay">
-                        <h4>Artist Name</h4>
-                        <p>Producer & Editor</p>
+                        <h4>Parikhit</h4>
+                        <p>Cinematographer</p>
                     </div>
                 </div>
                 <div class="artist-card reveal reveal-delay-2">
-                    <img src="{{ asset('images/rtlzoom.jpg') }}" alt="Artist 3" class="artist-image">
+                    <img src="{{ asset('images/cinemato2.jpeg') }}" alt="Artist 3" class="artist-image">
                     <div class="artist-overlay">
-                        <h4>Artist Name</h4>
-                        <p>Audio Engineer & Composer</p>
+                        <h4>Paras</h4>
+                        <p>Cinematographer</p>
                     </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CLIENTS SECTION -->
+    <section class="clients" id="clients">
+        <div class="container">
+            <div class="section-header reveal">
+                <h2>Our Clients</h2>
+                <div class="section-divider"></div>
+                <p>Trusted by amazing brands, creators, and businesses</p>
+            </div>
+            <div class="clients-grid">
+                <!-- Client 1 -->
+                <div class="client-card reveal">
+                    <img src="{{ asset('images/zeal_logo_final.png') }}" alt="Zeal Creations">
+                </div>
+                <!-- Client 2 -->
+                <div class="client-card reveal reveal-delay-1">
+                    <img src="{{ asset('images/tseries.png') }}" alt="T-Series">
+                </div>
+                <!-- Client 3 -->
+                <div class="client-card reveal reveal-delay-2">
+                    <img src="{{ asset('images/sony.jpeg') }}" alt="Sony Liv">
+                </div>
+                <!-- Client 4 -->
+                <div class="client-card reveal reveal-delay-3">
+                    <img src="{{ asset('images/Unknown.png') }}" alt="Petronas">
+                </div>
+                <!-- Client 5 -->
+                <div class="client-card reveal">
+                    <img src="{{ asset('images/fins.jpeg') }}" alt="Finns Weaver">
                 </div>
             </div>
         </div>
