@@ -581,9 +581,7 @@
         </video>
         <div class="hero-content">
             <h1 class="hero-title">
-                <span class="line">Rob</span>
-                <span class="line">the</span>
-                <span class="line">Lab</span>
+                <span class="line">Rob the Lab</span>
                 <span class="line highlight">Studios</span>
             </h1>
             <p class="hero-subtitle">Visuals that speak louder than words.</p>
