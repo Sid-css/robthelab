@@ -772,11 +772,11 @@
                     </div>
                 </div>
                 <div class="portfolio-item reveal reveal-delay-1">
-                    <img src="{{ asset('images/bupai.jpg') }}" alt="Product Launch" class="portfolio-image">
+                    <img src="{{ asset('images/burhi_makor_putek.png') }}" alt="Product Launch" class="portfolio-image">
                     <div class="portfolio-overlay">
-                        <h4>BUPAI (বোপাই)</h4>
+                        <h4>BURHI MAKOR PUTEK</h4>
                         <p> | LAKHYA | BIDYUT ROBIN | OFFICIAL MUSIC VIDEO</p>
-                        <a href="https://youtu.be/VM0dM8n4UYs?si=eeslMgxNJ9HjSwlF" target="_blank" rel="noopener noreferrer" class="portfolio-link"><i class="fas fa-play"></i></a>
+                        <a href="https://youtu.be/v11PJo5UI5g?list=RDv11PJo5UI5g" target="_blank" rel="noopener noreferrer" class="portfolio-link"><i class="fas fa-play"></i></a>
                     </div>
                 </div>
                 <div class="portfolio-item reveal reveal-delay-2">
