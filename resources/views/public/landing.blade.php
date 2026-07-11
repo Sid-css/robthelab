@@ -190,11 +190,35 @@
             margin-bottom: 24px;
         }
         .about-text p {
+            color: var(--mid); font-size: .95rem; line-height: 1.85; margin-bottom: 18px;
+        }
+        .about-text p:last-child {
+            margin-bottom: 0;
+        }
+        .about-right {
+            display: flex; flex-direction: column; gap: 48px;
+            border-left: 1px solid var(--line); padding-left: 60px;
+        }
+        .about-ecosystem h4 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.3rem; font-weight: 600; color: var(--ink);
+            margin-bottom: 16px; letter-spacing: .01em;
+        }
+        .about-ecosystem ul {
+            list-style: none; margin-bottom: 24px;
+        }
+        .about-ecosystem ul li {
+            font-size: .95rem; color: var(--mid); display: flex; align-items: flex-start; gap: 10px;
+            margin-bottom: 10px; line-height: 1.5;
+        }
+        .about-ecosystem ul li i {
+            color: var(--gold); font-size: .85rem; margin-top: 4px;
+        }
+        .about-ecosystem p {
             color: var(--mid); font-size: .95rem; line-height: 1.85;
         }
         .about-stats {
             display: flex; flex-direction: column; gap: 40px;
-            border-left: 1px solid var(--line); padding-left: 60px;
         }
         .stat { }
         .stat h3 {
@@ -545,8 +569,10 @@
 
             .about { padding: 72px 0; }
             .about-content { grid-template-columns: 1fr; gap: 40px; }
+            .about-right {
+                border-left: none; padding-left: 0; gap: 40px;
+            }
             .about-stats {
-                border-left: none; padding-left: 0;
                 flex-direction: row; gap: 0;
                 justify-content: space-between;
                 border-top: 1px solid var(--line);
@@ -685,28 +711,42 @@
             </div>
             <div class="about-content">
                 <div class="about-text reveal">
-                    <p class="lead">
-                        RobtheLabStudios is a creative video production studio delivering
-                        cinematic visuals, brand stories, corporate films, and unforgettable moments.
-                    </p>
-                    <p>
-                        We collaborate closely with clients to turn ideas into powerful visuals that 
-                        resonate with audiences and drive results. Our team combines technical expertise 
-                        with creative vision to produce content that stands out.
-                    </p>
+                    <p class="lead">We Don't Just Make Videos. We Create Culture.</p>
+                    <p>Rob The Lab Studios is a next-gen creative production house turning ideas into unforgettable visual experiences. From Official Music Videos, Commercials (TVCs & DVCs), Brand Films, Fashion Content, and Independent Cinema to full-scale audiovisual campaigns, we bring stories to life with style, emotion, and impact.</p>
+                    <p>Operating across Mumbai, Delhi, Chandigarh, and Northeast India, with a collective of filmmakers, musicians, writers, designers, and creative rebels obsessed with pushing boundaries. Whether it's a grassroots independent project or a national campaign, we build everything from the ground up — from concept and scripting to production, post-production, promotion, and distribution.</p>
+                    <p>At Rob The Lab Studios, we believe every frame should feel something. We blend cinematic storytelling, cutting-edge visuals, and authentic culture to create content that doesn't just get viewed—it gets remembered.</p>
+                    <p style="font-weight: 500; color: var(--ink); margin-top: 24px;">No matter the language. No matter the genre. No matter the scale.<br>We create stories that travel.</p>
+                    <p class="lead" style="margin-top: 24px; margin-bottom: 8px;">Create. Disrupt. Inspire.</p>
+                    <p>Welcome to Rob The Lab Studios.</p>
                 </div>
-                <div class="about-stats reveal reveal-delay-1">
-                    <div class="stat">
-                        <h3>500+</h3>
-                        <p>Projects Completed</p>
+                <div class="about-right reveal reveal-delay-1">
+                    <div class="about-ecosystem">
+                        <h4>Our in-house ecosystem covers:</h4>
+                        <ul>
+                            <li><i class="fas fa-check"></i> Creative Development & Storytelling</li>
+                            <li><i class="fas fa-check"></i> Music Production & Songwriting</li>
+                            <li><i class="fas fa-check"></i> Direction & Cinematography</li>
+                            <li><i class="fas fa-check"></i> Art, Design & Styling</li>
+                            <li><i class="fas fa-check"></i> Edit & VFX</li>
+                            <li><i class="fas fa-check"></i> Social Media Marketing</li>
+                            <li><i class="fas fa-check"></i> Audio Distribution</li>
+                            <li><i class="fas fa-check"></i> Line Production Support & Equipment Rentals</li>
+                        </ul>
+                        <p>Over the years, we've collaborated with industry leaders including T-Series, Sony Entertainment, Petronas, Orion Entertainment, alongside acclaimed regional powerhouses such as Zeal Creations, Rootstock, and many more.</p>
                     </div>
-                    <div class="stat">
-                        <h3>50+</h3>
-                        <p>Happy Clients</p>
-                    </div>
-                    <div class="stat">
-                        <h3>5+</h3>
-                        <p>Years Experience</p>
+                    <div class="about-stats">
+                        <div class="stat">
+                            <h3>500+</h3>
+                            <p>Projects Completed</p>
+                        </div>
+                        <div class="stat">
+                            <h3>50+</h3>
+                            <p>Happy Clients</p>
+                        </div>
+                        <div class="stat">
+                            <h3>5+</h3>
+                            <p>Years Experience</p>
+                        </div>
                     </div>
                 </div>
             </div>
