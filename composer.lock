@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "bdc6d92507d397adf1c269ed49ec424d",
+    "content-hash": "d6f74063d41314ec3021d7c0e683b762",
     "packages": [
         {
             "name": "brick/math",
@@ -3291,6 +3291,132 @@
             "time": "2025-12-14T04:43:48+00:00"
         },
         {
+            "name": "resend/resend-laravel",
+            "version": "v1.3.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/resend/resend-laravel.git",
+                "reference": "49773f31e9e7753f596f8459b6a8200525ffde0c"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/resend/resend-laravel/zipball/49773f31e9e7753f596f8459b6a8200525ffde0c",
+                "reference": "49773f31e9e7753f596f8459b6a8200525ffde0c",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/http": "^10.0|^11.0|^12.0|^13.0",
+                "illuminate/support": "^10.0|^11.0|^12.0|^13.0",
+                "php": "^8.1",
+                "resend/resend-php": "^1.0.0",
+                "symfony/mailer": "^6.2|^7.0|^8.0"
+            },
+            "require-dev": {
+                "friendsofphp/php-cs-fixer": "^3.14",
+                "mockery/mockery": "^1.5",
+                "orchestra/testbench": "^8.17|^9.0|^10.8|^11.0",
+                "pestphp/pest": "^1.0|^2.0|^3.7|^4.0"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Resend\\Laravel\\ResendServiceProvider"
+                    ]
+                },
+                "branch-alias": {
+                    "dev-main": "1.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Resend\\Laravel\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Resend and contributors",
+                    "homepage": "https://github.com/resend/resend-laravel/contributors"
+                }
+            ],
+            "description": "Resend for Laravel",
+            "homepage": "https://resend.com/",
+            "keywords": [
+                "api",
+                "client",
+                "laravel",
+                "php",
+                "resend",
+                "sdk"
+            ],
+            "support": {
+                "issues": "https://github.com/resend/resend-laravel/issues",
+                "source": "https://github.com/resend/resend-laravel/tree/v1.3.2"
+            },
+            "time": "2026-03-27T02:11:50+00:00"
+        },
+        {
+            "name": "resend/resend-php",
+            "version": "v1.1.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/resend/resend-php.git",
+                "reference": "3711ecd7b205b964a2a7d6f3faff9555ba3b1cc6"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/resend/resend-php/zipball/3711ecd7b205b964a2a7d6f3faff9555ba3b1cc6",
+                "reference": "3711ecd7b205b964a2a7d6f3faff9555ba3b1cc6",
+                "shasum": ""
+            },
+            "require": {
+                "guzzlehttp/guzzle": "^7.5",
+                "php": "^8.1.0"
+            },
+            "require-dev": {
+                "friendsofphp/php-cs-fixer": "^3.13",
+                "mockery/mockery": "^1.6",
+                "pestphp/pest": "^1.0|^2.0|^3.0|^4.0"
+            },
+            "type": "library",
+            "autoload": {
+                "files": [
+                    "src/Resend.php"
+                ],
+                "psr-4": {
+                    "Resend\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Resend and contributors",
+                    "homepage": "https://github.com/resend/resend-php/contributors"
+                }
+            ],
+            "description": "Resend PHP library.",
+            "homepage": "https://resend.com/",
+            "keywords": [
+                "api",
+                "client",
+                "php",
+                "resend",
+                "sdk"
+            ],
+            "support": {
+                "issues": "https://github.com/resend/resend-php/issues",
+                "source": "https://github.com/resend/resend-php/tree/v1.1.1"
+            },
+            "time": "2026-03-16T19:24:23+00:00"
+        },
+        {
             "name": "symfony/clock",
             "version": "v7.4.0",
             "source": {
@@ -6190,6 +6316,84 @@
                 "source": "https://github.com/hamcrest/hamcrest-php/tree/v2.1.1"
             },
             "time": "2025-04-30T06:54:44+00:00"
+        },
+        {
+            "name": "kitloong/laravel-migrations-generator",
+            "version": "v7.2.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/kitloong/laravel-migrations-generator.git",
+                "reference": "37f29a99671a5dde3a598e40157e2e245f077878"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/kitloong/laravel-migrations-generator/zipball/37f29a99671a5dde3a598e40157e2e245f077878",
+                "reference": "37f29a99671a5dde3a598e40157e2e245f077878",
+                "shasum": ""
+            },
+            "require": {
+                "ext-pdo": "*",
+                "illuminate/support": "^11.0|^12.0",
+                "php": "^8.2"
+            },
+            "require-dev": {
+                "barryvdh/laravel-ide-helper": "^3.0",
+                "friendsofphp/php-cs-fixer": "^3.1",
+                "larastan/larastan": "^2.0|^3.0",
+                "mockery/mockery": "^1.0",
+                "orchestra/testbench": "^9.0|^10.0",
+                "phpmd/phpmd": "^2.10",
+                "phpstan/phpstan-mockery": "^1.0|^2.0",
+                "slevomat/coding-standard": "^8.0",
+                "squizlabs/php_codesniffer": "^3.5"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "KitLoong\\MigrationsGenerator\\MigrationsGeneratorServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "KitLoong\\MigrationsGenerator\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Kit Loong",
+                    "email": "kitloong1008@gmail.com"
+                }
+            ],
+            "description": "Generates Laravel Migrations from an existing database",
+            "keywords": [
+                "artisan",
+                "generator",
+                "laravel",
+                "lumen",
+                "migration",
+                "migrations"
+            ],
+            "support": {
+                "issues": "https://github.com/kitloong/laravel-migrations-generator/issues",
+                "source": "https://github.com/kitloong/laravel-migrations-generator/tree/v7.2.0"
+            },
+            "funding": [
+                {
+                    "url": "https://www.buymeacoffee.com/kitloong",
+                    "type": "buy_me_a_coffee"
+                },
+                {
+                    "url": "https://github.com/kitloong",
+                    "type": "github"
+                }
+            ],
+            "time": "2025-08-10T07:31:19+00:00"
         },
         {
             "name": "laravel/breeze",

@@ -8,6 +8,12 @@
 </head>
 <body>
 
+@if (session('status'))
+    <div style="color: #2ecc71; background: #e8f8f5; padding: 10px; border-radius: 5px; margin-bottom: 15px; font-size: 0.9rem;">
+        {{ session('status') }}
+    </div>
+@endif
+
 <div class="auth-wrapper">
 
     <!-- LEFT BRAND SECTION -->
@@ -19,6 +25,7 @@
 
 
     <!-- RIGHT LOGIN SECTION -->
+  <!-- RIGHT LOGIN SECTION -->
     <div class="login-section">
         <h2>Login</h2>
 
@@ -27,7 +34,13 @@
 
             <div class="field">
                 <label>Email</label>
-                <input type="email" name="email" placeholder="Enter your email here" required>
+                <!-- Added value="{{ old('email') }}" so they don't have to retype it if they fail -->
+                <input type="email" name="email" value="{{ old('email') }}" placeholder="Enter your email here" required>
+                
+                <!-- Display Authentication Errors -->
+                @error('email')
+                    <span style="color: #e74c3c; font-size: 0.85rem; margin-top: 5px; display: block;">{{ $message }}</span>
+                @enderror
             </div>
 
             <div class="field">
@@ -37,7 +50,7 @@
 
             <button type="submit">Enter Studio</button>
 
-            <a href="#" class="forgot">Forgot password?</a>
+           <a href="{{ route('password.request') }}" class="forgot">Forgot password?</a>
         </form>
     </div>
 

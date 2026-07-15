@@ -113,10 +113,24 @@ body {
     left: 0;
     width: 100%;
     height: 100%;
+    object-fit: cover;
+    object-position: center;
+    opacity: 0.2;
+    z-index: 1;
+}
+
+.hero-background::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
     background: 
         radial-gradient(circle at 25% 25%, rgba(255, 215, 0, 0.1) 0%, transparent 50%),
         radial-gradient(circle at 75% 75%, rgba(255, 193, 7, 0.1) 0%, transparent 50%);
-    z-index: 1;
+    z-index: 0;
+    pointer-events: none;
 }
 
 .hero-content {
@@ -411,16 +425,20 @@ body {
     border-radius: 15px;
     overflow: hidden;
     aspect-ratio: 16/9;
+    cursor: pointer;
 }
 
 .portfolio-image {
     width: 100%;
     height: 100%;
-    background: linear-gradient(135deg, #FFD700, #FFC107);
-    position: relative;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    object-fit: cover;
+    object-position: center;
+    display: block;
+    transition: transform 0.3s ease;
+}
+
+.portfolio-item:hover .portfolio-image {
+    transform: scale(1.05);
 }
 
 .portfolio-overlay {

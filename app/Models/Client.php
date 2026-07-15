@@ -6,13 +6,20 @@ use Illuminate\Database\Eloquent\Model;
 
 class Client extends Model
 {
-        protected $fillable = [
+    // Explicitly define the table name because migration uses singular 'client'
+    protected $table = 'client';
+
+    // Explicitly define primary key if it is 'ID' (uppercase)
+    protected $primaryKey = 'ID';
+
+    // Disable timestamps because your migration does not have created_at/updated_at
+    public $timestamps = false; 
+
+    protected $fillable = [
         'name',
+        'phone_number', // Matches DB column
         'email',
-        'phone',
-        'company_name',
         'address',
-        'requirement_file_link',
-        'requirement_details',
+        'source',       // Matches DB column
     ];
 }
